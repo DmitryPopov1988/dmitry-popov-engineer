@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Dmitry Popov — Senior Software Engineer</title>
+  <meta name="description" content="Dmitry Popov — Senior Software Engineer with 7+ years building distributed, high-availability JVM systems. Personal site, experience, projects and contact." />
+  <link rel="canonical" href="https://dmitry.popov.engineer/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dmitry.popov.engineer/" />
+  <meta property="og:title" content="Dmitry Popov — Senior Software Engineer" />
+  <meta property="og:description" content="7+ years building distributed, high-availability JVM systems. Personal site of Dmitry Popov." />
+  <meta property="og:site_name" content="dmitry.popov.engineer" />
+  <meta property="og:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dmitry Popov — Senior Software Engineer" />
+  <meta name="twitter:description" content="Distributed JVM systems and full-stack web applications." />
+  <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta name="twitter:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="alternate icon" href="assets/favicon.svg" />
+
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <main class="terminal" aria-label="Terminal session">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title">dmitry@popov.engineer — zsh — 80×24</div>
+      <div style="width: 56px" aria-hidden="true"></div>
+    </div>
+    <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
+  </main>
+
+  <nav class="site-nav" aria-label="Site sections">
+    <a class="nav-link" href="index.html" aria-current="page">whoami</a>
+    <a class="nav-link" href="experience.html">experience</a>
+    <a class="nav-link" href="projects.html">projects</a>
+    <a class="nav-link" href="contact.html">contact</a>
+    <a class="nav-link" href="assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+  </nav>
+
+  <script src="assets/terminal.js"></script>
+  <script>
+    bootTerminal({
+      page: "whoami",
+      lines: [
+        { kind: "cmd", text: "whoami" },
+        { kind: "out", html: '<span class="tok-accent">Dmitry Popov</span>' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "role" },
+        { kind: "out", html: "Senior Software Engineer — 7+ years building distributed, high-availability JVM systems." },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "stack" },
+        { kind: "out", html: '<span class="tok-key">backend</span>:       Java 11/17/25, Spring (Boot, MVC, Data, Security)' },
+        { kind: "out", html: '<span class="tok-key">web</span>:           TypeScript, JavaScript, Node.js, Express' },
+        { kind: "out", html: '<span class="tok-key">data</span>:          PostgreSQL, MongoDB, Apache Cassandra, Liquibase' },
+        { kind: "out", html: '<span class="tok-key">messaging</span>:     ActiveMQ' },
+        { kind: "out", html: '<span class="tok-key">infra</span>:         Docker, Kubernetes, Terraform, Jenkins, Puppet, Rundeck' },
+        { kind: "out", html: '<span class="tok-key">testing</span>:       JUnit, AssertJ, JBehave, Cucumber, Jest, Playwright' },
+        { kind: "out", html: '<span class="tok-key">observability</span>: Grafana, Kibana, OpenSearch, Dynatrace, New Relic' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "certifications" },
+        { kind: "out", html: '  - AWS Certified Cloud Practitioner' },
+        { kind: "out", html: '  - AWS Certified AI Practitioner' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "help" },
+        { kind: "out", html: '<span class="tok-muted">Try:</span> <span class="tok-key">experience</span>, <span class="tok-key">projects</span>, <span class="tok-key">contact</span>, <span class="tok-key">cv</span> or <span class="tok-key">help</span>' }
+      ]
+    });
+  </script>
+</body>
+</html>

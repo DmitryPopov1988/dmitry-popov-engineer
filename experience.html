@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Experience — Dmitry Popov</title>
+  <meta name="description" content="Career timeline of Dmitry Popov — Senior Software Engineer with 7+ years across fintech, energy and banking." />
+  <link rel="canonical" href="https://dmitry.popov.engineer/experience.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dmitry.popov.engineer/experience.html" />
+  <meta property="og:title" content="Experience — Dmitry Popov" />
+  <meta property="og:description" content="Career timeline of Dmitry Popov — Senior Software Engineer." />
+  <meta property="og:site_name" content="dmitry.popov.engineer" />
+  <meta property="og:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Experience — Dmitry Popov" />
+  <meta name="twitter:description" content="Career timeline of Dmitry Popov." />
+  <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta name="twitter:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <main class="terminal" aria-label="Terminal session">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title">dmitry@popov.engineer — zsh — experience</div>
+      <div style="width: 56px" aria-hidden="true"></div>
+    </div>
+    <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
+  </main>
+
+  <nav class="site-nav" aria-label="Site sections">
+    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="experience.html" aria-current="page">experience</a>
+    <a class="nav-link" href="projects.html">projects</a>
+    <a class="nav-link" href="contact.html">contact</a>
+    <a class="nav-link" href="assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+  </nav>
+
+  <script src="assets/terminal.js"></script>
+  <script>
+    bootTerminal({
+      page: "experience",
+      lines: [
+        { kind: "cmd", text: "cat career.log" },
+        { kind: "gap" },
+
+        { kind: "out", html: '<span class="tok-accent">Senior Java Software Engineer</span>  <span class="tok-muted">@ Alfa-Bank (Belarus)</span>      <span class="tok-key">04/2026 — present</span>' },
+        { kind: "out", html: '  - Developing distributed systems in a regulated banking environment.' },
+        { kind: "gap" },
+
+        { kind: "out", html: '<span class="tok-accent">Senior Software Engineer (Backend / Full-Stack)</span>  <span class="tok-muted">@ Godel Technologies Europe</span>      <span class="tok-key">01/2019 — 04/2026</span>' },
+        { kind: "out", html: '  <span class="tok-muted">Outsourcing engineer embedded in cross-functional teams delivering</span>' },
+        { kind: "out", html: '  <span class="tok-muted">high-load production systems for UK-based enterprise clients.</span>' },
+        { kind: "gap" },
+
+        { kind: "out", html: '  <span class="tok-string">04/2024 — 04/2026</span>  <span class="tok-muted">— UK FinTech / Insurance domain</span>' },
+        { kind: "out", html: '    - Senior Full-Stack Engineer on four of the platform\u2019s customer-facing' },
+        { kind: "out", html: '      web applications; platform served ~10M monthly online users.' },
+        { kind: "out", html: '    - Implemented frontend validation and client-side scripting; hardened' },
+        { kind: "out", html: '      web application security and improved accessibility compliance.' },
+        { kind: "out", html: '    - Collaborated with product, QA and SRE to ship changes behind feature' },
+        { kind: "out", html: '      flags with contract and end-to-end tests (Playwright, Jest).' },
+        { kind: "gap" },
+
+        { kind: "out", html: '  <span class="tok-string">01/2019 — 04/2024</span>  <span class="tok-muted">— UK Energy Market domain</span>' },
+        { kind: "out", html: '    - Designed and developed distributed, microservices-based Java' },
+        { kind: "out", html: '      backend services handling a customer base of 2M+.' },
+        { kind: "out", html: '    - Owned several core business domains end-to-end, from design' },
+        { kind: "out", html: '      to production support.' },
+        { kind: "out", html: '    - Delivered high-availability services with Spring Boot, PostgreSQL,' },
+        { kind: "out", html: '      ActiveMQ and Cassandra on Kubernetes; CI via Jenkins.' },
+        { kind: "out", html: '    - Integrated with third-party providers; designed monitoring' },
+        { kind: "out", html: '      dashboards (Grafana, Kibana, Dynatrace), notification workflows' },
+        { kind: "out", html: '      and customer-facing email templates.' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "highlights --short" },
+        { kind: "out", html: '  • <span class="tok-string">7+ years</span> of commercial experience in the JVM ecosystem' },
+        { kind: "out", html: '  • Distributed systems, microservices, event-driven architecture' },
+        { kind: "out", html: '  • Full-stack delivery with TypeScript and Node.js, including web security and accessibility' },
+        { kind: "out", html: '  • AWS Certified: Cloud Practitioner &amp; AI Practitioner' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat education.txt" },
+        { kind: "out", html: '<span class="tok-accent">Brest State Technical University</span>, Republic of Belarus' },
+        { kind: "out", html: '  <span class="tok-key">degree</span>: Bachelor\u2019s, IT Engineer' },
+        { kind: "out", html: '  <span class="tok-key">years</span>:  01/2007 — 12/2013' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "help" },
+        { kind: "out", html: '<span class="tok-muted">Try:</span> <span class="tok-key">whoami</span>, <span class="tok-key">projects</span>, <span class="tok-key">contact</span>, <span class="tok-key">cv</span> or <span class="tok-key">help</span>' }
+      ]
+    });
+  </script>
+</body>
+</html>

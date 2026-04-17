@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Contact — Dmitry Popov</title>
+  <meta name="description" content="Get in touch with Dmitry Popov — email, LinkedIn and CV." />
+  <link rel="canonical" href="https://dmitry.popov.engineer/contact.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dmitry.popov.engineer/contact.html" />
+  <meta property="og:title" content="Contact — Dmitry Popov" />
+  <meta property="og:description" content="Email, LinkedIn and CV of Dmitry Popov." />
+  <meta property="og:site_name" content="dmitry.popov.engineer" />
+  <meta property="og:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Dmitry Popov" />
+  <meta name="twitter:description" content="Email, LinkedIn and CV of Dmitry Popov." />
+  <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta name="twitter:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <main class="terminal" aria-label="Terminal session">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title">dmitry@popov.engineer — zsh — contact</div>
+      <div style="width: 56px" aria-hidden="true"></div>
+    </div>
+    <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
+  </main>
+
+  <nav class="site-nav" aria-label="Site sections">
+    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="experience.html">experience</a>
+    <a class="nav-link" href="projects.html">projects</a>
+    <a class="nav-link" href="contact.html" aria-current="page">contact</a>
+    <a class="nav-link" href="assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+  </nav>
+
+  <script src="assets/terminal.js"></script>
+  <script>
+    bootTerminal({
+      page: "contact",
+      lines: [
+        { kind: "cmd", text: "cat contact.txt" },
+        { kind: "out", html: '<span class="tok-key">email</span>:    <a class="terminal-link" href="mailto:dmitry.popov.dev@icloud.com">dmitry.popov.dev@icloud.com</a>' },
+        { kind: "out", html: '<span class="tok-key">linkedin</span>: <a class="terminal-link" href="https://www.linkedin.com/in/dmitry-popov-12187816b" target="_blank" rel="noopener noreferrer">linkedin.com/in/dmitry-popov-12187816b</a>' },
+        { kind: "gap" },
+        { kind: "cmd", text: "echo \"availability\"" },
+        { kind: "out", html: '<span class="tok-muted">Replies within ~24h on weekdays.</span>' },
+        { kind: "gap" },
+        { kind: "cmd", text: "help" },
+        { kind: "out", html: '<span class="tok-muted">Try:</span> <span class="tok-key">whoami</span>, <span class="tok-key">experience</span>, <span class="tok-key">projects</span>, <span class="tok-key">cv</span> or <span class="tok-key">help</span>' }
+      ]
+    });
+  </script>
+</body>
+</html>

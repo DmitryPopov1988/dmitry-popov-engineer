@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dmitry Popov — CV</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --prompt: #7ee787;
+      --key: #79c0ff;
+      --string: #a5d6ff;
+      --accent: #d2a8ff;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Menlo", "JetBrains Mono", "SF Mono", "Consolas", monospace;
+      font-size: 10.5pt;
+      line-height: 1.55;
+    }
+
+    .page {
+      padding: 14mm 16mm;
+      min-height: 297mm;
+    }
+
+    .prompt {
+      color: var(--prompt);
+      margin-top: 10pt;
+      margin-bottom: 4pt;
+      font-weight: 400;
+      font-size: 11pt;
+    }
+
+    .prompt:first-child {
+      margin-top: 0;
+    }
+
+    .name {
+      color: var(--accent);
+      font-size: 17pt;
+      font-weight: 500;
+      margin: 2pt 0 0 0;
+    }
+
+    .title {
+      color: var(--text);
+      margin: 0 0 4pt 0;
+      font-size: 11pt;
+    }
+
+    .contacts {
+      color: var(--muted);
+      margin: 0;
+      font-size: 10pt;
+    }
+
+    .contacts a {
+      color: var(--string);
+      text-decoration: none;
+    }
+
+    .contacts .sep {
+      color: var(--muted);
+      padding: 0 0.4em;
+    }
+
+    .summary {
+      color: var(--text);
+      margin: 0;
+    }
+
+    .job {
+      page-break-inside: avoid;
+      margin-bottom: 8pt;
+    }
+
+    .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12pt;
+      margin: 0;
+    }
+
+    .job-title {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .job-company {
+      color: var(--muted);
+    }
+
+    .job-dates {
+      color: var(--prompt);
+      white-space: nowrap;
+    }
+
+    .job-intro {
+      color: var(--muted);
+      margin: 2pt 0 4pt 0;
+    }
+
+    .sub {
+      margin: 4pt 0 2pt 12pt;
+    }
+
+    .sub-head {
+      color: var(--string);
+      margin: 0;
+    }
+
+    ul.bullets {
+      list-style: none;
+      padding: 0;
+      margin: 2pt 0 0 12pt;
+    }
+
+    ul.bullets li {
+      margin: 0 0 2pt 0;
+      padding-left: 0;
+    }
+
+    ul.bullets li::before {
+      content: "— ";
+      color: var(--muted);
+    }
+
+    .stack-row {
+      margin: 1pt 0;
+      white-space: pre-wrap;
+    }
+
+    .key {
+      color: var(--key);
+    }
+
+    .sep-line {
+      border: 0;
+      border-top: 1px dashed #30363d;
+      margin: 10pt 0;
+    }
+
+    .foot {
+      color: var(--muted);
+      font-size: 9pt;
+      margin-top: 12pt;
+    }
+
+    .foot a {
+      color: var(--string);
+      text-decoration: none;
+    }
+
+    @media screen {
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <p class="prompt">&gt; whoami</p>
+  <p class="name">Dmitry Popov</p>
+  <p class="title">Senior Software Engineer</p>
+  <p class="contacts">
+    <a href="mailto:dmitry.popov.dev@icloud.com">dmitry.popov.dev@icloud.com</a>
+    <span class="sep">·</span>
+    <a href="https://www.linkedin.com/in/dmitry-popov-12187816b">linkedin.com/in/dmitry-popov-12187816b</a>
+    <span class="sep">·</span>
+    <a href="https://dmitry.popov.engineer">dmitry.popov.engineer</a>
+  </p>
+
+  <p class="prompt">&gt; summary</p>
+  <p class="summary">
+    Software Engineer with 7+ years of commercial experience building distributed,
+    high-availability JVM systems. Comfortable across the stack — from core backend
+    services in Java and Spring to full-stack delivery with TypeScript and Node.js.
+    Strong focus on system design, reliability and long-term maintainability.
+  </p>
+
+  <p class="prompt">&gt; experience</p>
+
+  <div class="job">
+    <p class="job-head">
+      <span><span class="job-title">Senior Java Software Engineer</span>
+        <span class="job-company">@ Alfa-Bank (Belarus)</span></span>
+      <span class="job-dates">04/2026 — present</span>
+    </p>
+    <ul class="bullets">
+      <li>Developing distributed systems in a regulated banking environment.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="job-head">
+      <span><span class="job-title">Senior Software Engineer (Backend / Full-Stack)</span>
+        <span class="job-company">@ Godel Technologies Europe</span></span>
+      <span class="job-dates">01/2019 — 04/2026</span>
+    </p>
+    <p class="job-intro">
+      Outsourcing engineer embedded in cross-functional teams delivering high-load
+      production systems for UK-based enterprise clients. Client names omitted under NDA;
+      engagements described by industry domain.
+    </p>
+
+    <div class="sub">
+      <p class="sub-head">04/2024 — 04/2026 &nbsp;—&nbsp; UK FinTech / Insurance domain</p>
+      <ul class="bullets">
+        <li>Senior Full-Stack Engineer on four of the platform's customer-facing web applications; platform served ~10M monthly online users.</li>
+        <li>Delivered both frontend and backend layers; implemented frontend validation and client-side scripting.</li>
+        <li>Hardened web application security and improved accessibility compliance across shipped changes.</li>
+        <li>Contract and end-to-end tests with Jest and Playwright; shipped changes behind feature flags.</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <p class="sub-head">01/2019 — 04/2024 &nbsp;—&nbsp; UK Energy Market domain</p>
+      <ul class="bullets">
+        <li>Designed and developed distributed, microservices-based Java backend services handling a customer base of 2M+.</li>
+        <li>Owned several core business domains end-to-end, from design to production support.</li>
+        <li>Delivered high-availability services with Spring Boot, PostgreSQL, ActiveMQ and Cassandra on Kubernetes; CI on Jenkins.</li>
+        <li>Integrated with third-party providers; designed monitoring dashboards (Grafana, Kibana, Dynatrace), notification workflows and customer-facing email templates.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="prompt">&gt; education</p>
+  <div class="job">
+    <p class="job-head">
+      <span><span class="job-title">Bachelor's degree, IT Engineer</span>
+        <span class="job-company">@ Brest State Technical University, Republic of Belarus</span></span>
+      <span class="job-dates">01/2007 — 12/2013</span>
+    </p>
+  </div>
+
+  <p class="prompt">&gt; stack</p>
+  <div class="stack-row"><span class="key">backend</span>:       Java 11/17/25, Spring (Boot, MVC, Data, Security)</div>
+  <div class="stack-row"><span class="key">web</span>:           TypeScript, JavaScript, Node.js, Express</div>
+  <div class="stack-row"><span class="key">data</span>:          PostgreSQL, MongoDB, Apache Cassandra, Liquibase</div>
+  <div class="stack-row"><span class="key">messaging</span>:     ActiveMQ</div>
+  <div class="stack-row"><span class="key">infra</span>:         Docker, Kubernetes, Terraform, Jenkins, Puppet, Rundeck</div>
+  <div class="stack-row"><span class="key">testing</span>:       JUnit, AssertJ, JBehave, Cucumber, Jest, Playwright</div>
+  <div class="stack-row"><span class="key">observability</span>: Grafana, Kibana, OpenSearch, Dynatrace, New Relic</div>
+  <div class="stack-row"><span class="key">vcs</span>:           GitHub, GitLab, BitBucket</div>
+  <div class="stack-row"><span class="key">ai tools</span>:      Windsurf, JetBrains AI Assistant, GitHub Copilot, Codex</div>
+
+  <p class="prompt">&gt; certifications</p>
+  <ul class="bullets">
+    <li>AWS Certified Cloud Practitioner</li>
+    <li>AWS Certified AI Practitioner</li>
+  </ul>
+
+  <hr class="sep-line" />
+  <p class="foot">
+    Generated from <a href="https://dmitry.popov.engineer">dmitry.popov.engineer</a>
+    · source of truth: the site
+  </p>
+</div>
+</body>
+</html>

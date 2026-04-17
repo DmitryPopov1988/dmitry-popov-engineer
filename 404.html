@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="color-scheme" content="dark" />
+  <title>404 — Dmitry Popov</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="terminal" aria-label="Terminal session">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title">dmitry@popov.engineer — zsh — 404</div>
+      <div style="width: 56px" aria-hidden="true"></div>
+    </div>
+    <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
+  </main>
+
+  <nav class="site-nav" aria-label="Site sections">
+    <a class="nav-link" href="/">whoami</a>
+    <a class="nav-link" href="/experience.html">experience</a>
+    <a class="nav-link" href="/projects.html">projects</a>
+    <a class="nav-link" href="/contact.html">contact</a>
+    <a class="nav-link" href="/assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+  </nav>
+
+  <script src="/assets/terminal.js"></script>
+  <script>
+    bootTerminal({
+      page: "404",
+      lines: [
+        { kind: "cmd", text: "cd " + (location.pathname || "/?") },
+        { kind: "out", html: '<span class="tok-error">cd: no such file or directory:</span> ' + location.pathname.replace(/[<>&"]/g, "") },
+        { kind: "gap" },
+        { kind: "out", html: '<span class="tok-muted">try </span><span class="tok-key">whoami</span><span class="tok-muted">, </span><span class="tok-key">experience</span><span class="tok-muted">, </span><span class="tok-key">projects</span><span class="tok-muted">, </span><span class="tok-key">contact</span><span class="tok-muted"> or </span><span class="tok-key">help</span>' }
+      ]
+    });
+  </script>
+</body>
+</html>

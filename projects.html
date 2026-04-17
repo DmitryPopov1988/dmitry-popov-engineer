@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>Projects — Dmitry Popov</title>
+  <meta name="description" content="Selected engagements by Dmitry Popov — Senior Software Engineer (anonymized, by domain)." />
+  <link rel="canonical" href="https://dmitry.popov.engineer/projects.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dmitry.popov.engineer/projects.html" />
+  <meta property="og:title" content="Projects — Dmitry Popov" />
+  <meta property="og:description" content="Selected projects by Dmitry Popov." />
+  <meta property="og:site_name" content="dmitry.popov.engineer" />
+  <meta property="og:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Projects — Dmitry Popov" />
+  <meta name="twitter:description" content="Selected projects by Dmitry Popov." />
+  <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og.png" />
+  <meta name="twitter:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+  <main class="terminal" aria-label="Terminal session">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title">dmitry@popov.engineer — zsh — projects</div>
+      <div style="width: 56px" aria-hidden="true"></div>
+    </div>
+    <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
+  </main>
+
+  <nav class="site-nav" aria-label="Site sections">
+    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="experience.html">experience</a>
+    <a class="nav-link" href="projects.html" aria-current="page">projects</a>
+    <a class="nav-link" href="contact.html">contact</a>
+    <a class="nav-link" href="assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+  </nav>
+
+  <script src="assets/terminal.js"></script>
+  <script>
+    bootTerminal({
+      page: "projects",
+      lines: [
+        { kind: "cmd", text: "ls work/" },
+        { kind: "out", html: '<span class="tok-key">alfa-bank-by/</span>   <span class="tok-key">uk-fintech-insurance/</span>   <span class="tok-key">uk-energy-platform/</span>   <span class="tok-key">dmitry-popov-engineer/</span>' },
+        { kind: "gap" },
+
+        { kind: "out", html: '<span class="tok-muted"># UK outsourcing client names omitted under NDA.</span>' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat work/alfa-bank-by/README.md" },
+        { kind: "out", html: '<span class="tok-accent">alfa-bank-by</span> <span class="tok-muted">— Senior Java Software Engineer, 04/2026 — present</span>' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>: Java 25, Spring, MongoDB, distributed systems in a regulated banking environment' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat work/uk-fintech-insurance/README.md" },
+        { kind: "out", html: '<span class="tok-accent">uk-fintech-insurance</span> <span class="tok-muted">— Senior Full-Stack Engineer, 04/2024 — 04/2026</span>' },
+        { kind: "out", html: '  <span class="tok-key">scale</span>:   ~10M monthly online users on the platform' },
+        { kind: "out", html: '  <span class="tok-key">role</span>:    full-stack delivery on four of the platform\u2019s customer web applications' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>:   TypeScript, Node.js, Jest, Playwright' },
+        { kind: "out", html: '  <span class="tok-key">focus</span>:   frontend validation and client-side scripting;' },
+        { kind: "out", html: '           web application security and accessibility standards' },
+        { kind: "out", html: '  <span class="tok-key">shipped</span>: contract- and end-to-end-tested changes behind feature flags' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat work/uk-energy-platform/README.md" },
+        { kind: "out", html: '<span class="tok-accent">uk-energy-platform</span> <span class="tok-muted">— Senior Backend Engineer, 01/2019 — 04/2024</span>' },
+        { kind: "out", html: '  <span class="tok-key">scale</span>:   distributed microservices platform serving 2M+ customers' },
+        { kind: "out", html: '  <span class="tok-key">scope</span>:   multiple core business domains, owned end-to-end' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>:   Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra,' },
+        { kind: "out", html: '           Kubernetes, Jenkins, Liquibase, Grafana, Kibana, Dynatrace' },
+        { kind: "out", html: '  <span class="tok-key">focus</span>:   high-availability backend services; third-party integrations;' },
+        { kind: "out", html: '           monitoring dashboards, notification workflows and' },
+        { kind: "out", html: '           customer-facing email templates' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat work/dmitry-popov-engineer/README.md" },
+        { kind: "out", html: '<span class="tok-accent">dmitry-popov-engineer</span> <span class="tok-muted">— this site</span>' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>: plain HTML/CSS/JS' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "help" },
+        { kind: "out", html: '<span class="tok-muted">Try:</span> <span class="tok-key">whoami</span>, <span class="tok-key">experience</span>, <span class="tok-key">contact</span>, <span class="tok-key">cv</span> or <span class="tok-key">help</span>' }
+      ]
+    });
+  </script>
+</body>
+</html>
