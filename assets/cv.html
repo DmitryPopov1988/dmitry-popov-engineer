@@ -67,18 +67,24 @@
 
     .contacts {
       color: var(--muted);
-      margin: 0;
+      margin: 2pt 0 0 0;
       font-size: 10pt;
+    }
+
+    .contacts .row {
+      white-space: pre;
+      margin: 1pt 0;
+    }
+
+    .contacts .key {
+      color: var(--key);
     }
 
     .contacts a {
       color: var(--string);
-      text-decoration: none;
-    }
-
-    .contacts .sep {
-      color: var(--muted);
-      padding: 0 0.4em;
+      text-decoration: underline;
+      text-decoration-color: rgba(165, 214, 255, 0.5);
+      text-underline-offset: 2px;
     }
 
     .summary {
@@ -189,13 +195,11 @@
   <p class="prompt">&gt; whoami</p>
   <p class="name">Dmitry Popov</p>
   <p class="title">Senior Software Engineer</p>
-  <p class="contacts">
-    <a href="mailto:dmitry.popov.dev@icloud.com">dmitry.popov.dev@icloud.com</a>
-    <span class="sep">·</span>
-    <a href="https://www.linkedin.com/in/dmitry-popov-12187816b">linkedin.com/in/dmitry-popov-12187816b</a>
-    <span class="sep">·</span>
-    <a href="https://dmitry.popov.engineer">dmitry.popov.engineer</a>
-  </p>
+  <div class="contacts">
+    <div class="row"><span class="key">email</span>:    <a href="mailto:dmitry.popov.dev@icloud.com">dmitry.popov.dev@icloud.com</a></div>
+    <div class="row"><span class="key">linkedin</span>: <a href="https://www.linkedin.com/in/dmitry-popov-12187816b">linkedin.com/in/dmitry-popov-12187816b</a></div>
+    <div class="row"><span class="key">site</span>:     <a href="https://dmitry.popov.engineer">dmitry.popov.engineer</a></div>
+  </div>
 
   <p class="prompt">&gt; summary</p>
   <p class="summary">
