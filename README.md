@@ -142,5 +142,4 @@ Each `lines` entry is one of:
 
 ## License
 
-Personal website — all rights reserved. Code snippets in this repo can be
-treated as MIT for the engine itself; content (text, CV) is © Dmitry Popov.
+Engine code (HTML/CSS/JS) — MIT. Content (personal info, CV, copy) — © Dmitry Popov, all rights reserved.
