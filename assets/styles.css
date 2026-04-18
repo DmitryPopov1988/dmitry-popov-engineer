@@ -160,7 +160,7 @@ body {
 .line {
   margin: 0;
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .line.gap {
@@ -285,10 +285,10 @@ a.terminal-link:focus-visible {
   }
   html,
   body {
-    font-size: 13.5px;
+    font-size: 12.5px;
   }
   .screen {
-    padding: 14px 16px 18px;
+    padding: 14px 14px 18px;
   }
   .title {
     display: none;
