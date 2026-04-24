@@ -15,13 +15,18 @@ session with an interactive prompt that doubles as the navigation.
 ├── contact.html        # > contact (email, linkedin, cv)
 ├── 404.html            # terminal-style "command not found"
 ├── assets/
-│   ├── styles.css      # shared stylesheet (GitHub-dark inspired)
-│   ├── terminal.js     # typing engine + interactive prompt
-│   ├── favicon.svg     # `>` glyph favicon
-│   ├── og.svg          # social share image source (1200×630)
-│   ├── og.png          # rendered social share image (used by og:image)
-│   ├── cv.html         # CV source (terminal-dark theme, print-optimized)
-│   └── cv.pdf          # CV rendered to PDF (served by the `cv` command)
+│   ├── styles.css            # shared stylesheet (GitHub-dark inspired)
+│   ├── terminal.js           # typing engine + interactive prompt
+│   ├── favicon.svg           # `>` glyph favicon
+│   ├── fonts/                # self-hosted JetBrains Mono (woff2)
+│   ├── og.svg                # default share image source (1200×630, used by index/contact/404)
+│   ├── og.png                # rendered default share image
+│   ├── og-experience.svg     # share image source for experience.html
+│   ├── og-experience.png     # rendered share image for experience.html
+│   ├── og-projects.svg       # share image source for projects.html
+│   ├── og-projects.png       # rendered share image for projects.html
+│   ├── cv.html               # CV source (terminal-dark theme, print-optimized)
+│   └── cv.pdf                # CV rendered to PDF (served by the `cv` command)
 ├── CNAME               # custom domain for GitHub Pages
 ├── robots.txt
 ├── sitemap.xml
@@ -78,25 +83,30 @@ Alternative hosts (no code change needed):
 - **Netlify** — drag-and-drop the folder or connect the repo, custom domain
   `dmitry.popov.engineer`.
 
-## Regenerating the social share image
+## Regenerating the social share images
 
-`assets/og.svg` is the editable source. Most social platforms (LinkedIn,
-Twitter/X, Facebook, iMessage) don't support SVG for `og:image`, so the
-site references `assets/og.png` instead. If you edit the SVG, regenerate
-the PNG with headless Chrome:
+The site has a default share image (`assets/og.svg`) plus per-page
+variants for `experience.html` and `projects.html`. Most social
+platforms (LinkedIn, Twitter/X, Facebook, iMessage) don't support SVG
+for `og:image`, so each SVG has a matching pre-rendered PNG that is
+referenced from the HTML. If you edit any of the SVGs, regenerate the
+matching PNG with headless Chrome — repeat for each `og*.svg` you
+changed:
 
 ```bash
-cat > /tmp/og_wrap.html <<'HTML'
+NAME=og   # one of: og, og-experience, og-projects
+
+cat > /tmp/og_wrap.html <<HTML
 <!DOCTYPE html><meta charset="UTF-8">
 <style>html,body{margin:0;width:1200px;height:630px;background:#0d1117}
 img{display:block;width:1200px;height:630px}</style>
-<img src="file://$PWD/assets/og.svg">
+<img src="file://$PWD/assets/${NAME}.svg">
 HTML
 
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
   --headless=new --disable-gpu --hide-scrollbars \
   --window-size=1200,630 --force-device-scale-factor=1 \
-  --screenshot="$PWD/assets/og.png" file:///tmp/og_wrap.html
+  --screenshot="$PWD/assets/${NAME}.png" file:///tmp/og_wrap.html
 ```
 
 ## Regenerating the CV PDF

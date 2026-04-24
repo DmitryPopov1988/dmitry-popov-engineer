@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- terminal window -->
+  <rect x="120" y="80" width="960" height="480" rx="16" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <rect x="120" y="80" width="960" height="44" rx="16" fill="#21262d"/>
+  <rect x="120" y="108" width="960" height="16" fill="#21262d"/>
+  <circle cx="150" cy="102" r="7" fill="#ff5f57"/>
+  <circle cx="174" cy="102" r="7" fill="#ffbd2e"/>
+  <circle cx="198" cy="102" r="7" fill="#28c840"/>
+  <text x="600" y="107" text-anchor="middle" font-family="Menlo, monospace" font-size="14" fill="#8b949e">dmitry@popov.engineer &#8212; zsh &#8212; projects</text>
+
+  <!-- content -->
+  <g font-family="Menlo, 'JetBrains Mono', monospace" font-size="22">
+    <text x="160" y="180" fill="#7ee787">&gt; ls work/</text>
+    <text x="160" y="212" fill="#79c0ff">alfa-bank-by/   uk-fintech-insurance/   uk-energy-platform/</text>
+
+    <text x="160" y="272" fill="#7ee787">&gt; cat work/uk-energy-platform/README.md</text>
+    <text x="160" y="304" fill="#d2a8ff">uk-energy-platform<tspan fill="#8b949e">  &#8212; Senior Backend Engineer, 01/2019 &#8212; 04/2024</tspan></text>
+    <text x="180" y="336" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  distributed microservices, customer base of 2M+</text>
+    <text x="180" y="364" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra, K8s</text>
+
+    <text x="160" y="424" fill="#7ee787">&gt; cat work/uk-fintech-insurance/README.md</text>
+    <text x="160" y="456" fill="#d2a8ff">uk-fintech-insurance<tspan fill="#8b949e">  &#8212; Senior Full-Stack Engineer, 04/2024 &#8212; 04/2026</tspan></text>
+    <text x="180" y="488" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  ~10M monthly online users</text>
+    <text x="180" y="516" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  TypeScript, Node.js, Jest, Playwright</text>
+  </g>
+
+  <text x="600" y="605" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#8b949e">dmitry.popov.engineer/projects</text>
+</svg>
