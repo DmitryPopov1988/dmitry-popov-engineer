@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="/" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1117" />
@@ -26,8 +27,8 @@
   <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og.png" />
   <meta name="twitter:image:alt" content="Terminal window: whoami — Dmitry Popov, Senior Software Engineer." />
 
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <main class="terminal" aria-label="Terminal session">
@@ -44,20 +45,29 @@
   </main>
 
   <nav class="site-nav" aria-label="Site sections">
-    <a class="nav-link" href="/">whoami</a>
-    <a class="nav-link" href="/experience.html">experience</a>
-    <a class="nav-link" href="/projects.html">projects</a>
-    <a class="nav-link" href="/contact.html">contact</a>
-    <a class="nav-link" href="/assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
+    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="experience.html">experience</a>
+    <a class="nav-link" href="projects.html">projects</a>
+    <a class="nav-link" href="contact.html">contact</a>
+    <a class="nav-link" href="assets/cv.pdf" download="Dmitry_Popov_CV.pdf">cv ↓</a>
   </nav>
 
-  <script src="/assets/terminal.js"></script>
+  <script src="assets/terminal.js"></script>
   <script>
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
     bootTerminal({
       page: "404",
       lines: [
         { kind: "cmd", text: "cd " + (location.pathname || "/?") },
-        { kind: "out", html: '<span class="tok-error">cd: no such file or directory:</span> ' + location.pathname.replace(/[<>&"]/g, "") },
+        { kind: "out", html: '<span class="tok-error">cd: no such file or directory:</span> ' + escapeHtml(location.pathname || "/?") },
         { kind: "gap" },
         { kind: "out", html: '<span class="tok-muted">try </span><span class="tok-key">whoami</span><span class="tok-muted">, </span><span class="tok-key">experience</span><span class="tok-muted">, </span><span class="tok-key">projects</span><span class="tok-muted">, </span><span class="tok-key">contact</span><span class="tok-muted"> or </span><span class="tok-key">help</span>' }
       ]

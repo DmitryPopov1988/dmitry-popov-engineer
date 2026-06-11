@@ -245,13 +245,11 @@
     if (cmd === "ls") {
       printOut(
         screen,
-        [
-          '<span class="tok-key">whoami</span>      ' +
-            '<span class="tok-key">experience</span>  ' +
-            '<span class="tok-key">projects</span>    ' +
-            '<span class="tok-key">contact</span>     ' +
-            '<span class="tok-key">cv</span>',
-        ].join("\n")
+        '<span class="tok-key">whoami</span>      ' +
+          '<span class="tok-key">experience</span>  ' +
+          '<span class="tok-key">projects</span>    ' +
+          '<span class="tok-key">contact</span>     ' +
+          '<span class="tok-key">cv</span>'
       );
       return;
     }
@@ -318,7 +316,7 @@
       .replace(/'/g, "&#39;");
   }
 
-  function mountPrompt(screen) {
+  function mountPrompt(screen, session) {
     const wrap = el("div", "input-line");
     const ps1 = el("span", "ps1");
     ps1.innerHTML = ps1Html();
@@ -344,9 +342,7 @@
     wrap.appendChild(input);
     screen.appendChild(wrap);
     scrollToBottom(screen);
-
-    const history = [];
-    let hIdx = 0;
+    session.activeInput = input;
 
     function getValue() {
       return input.textContent || "";
@@ -362,26 +358,26 @@
         e.preventDefault(); // never insert a newline
         const value = getValue();
         if (value.trim()) {
-          history.push(value);
-          hIdx = history.length;
+          session.history.push(value);
+          session.hIdx = session.history.length;
         }
         wrap.remove();
         handleCommand(screen, value);
-        mountPrompt(screen);
+        mountPrompt(screen, session);
       } else if (e.key === "ArrowUp") {
-        if (history.length === 0) return;
+        if (session.history.length === 0) return;
         e.preventDefault();
-        hIdx = Math.max(0, hIdx - 1);
-        setValue(history[hIdx] || "");
+        session.hIdx = Math.max(0, session.hIdx - 1);
+        setValue(session.history[session.hIdx] || "");
       } else if (e.key === "ArrowDown") {
-        if (history.length === 0) return;
+        if (session.history.length === 0) return;
         e.preventDefault();
-        hIdx = Math.min(history.length, hIdx + 1);
-        setValue(history[hIdx] || "");
+        session.hIdx = Math.min(session.history.length, session.hIdx + 1);
+        setValue(session.history[session.hIdx] || "");
       } else if (e.key === "l" && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         clearScreen(screen);
-        mountPrompt(screen);
+        mountPrompt(screen, session);
       }
     });
 
@@ -393,18 +389,6 @@
       );
       document.execCommand("insertText", false, text);
     });
-
-    // Focus on click anywhere in the screen
-    screen.addEventListener(
-      "click",
-      (ev) => {
-        // Don't steal focus from real links
-        if (ev.target.closest("a")) return;
-        input.focus();
-        moveCaretToEnd(input);
-      },
-      { passive: true }
-    );
 
     input.focus({ preventScroll: true });
   }
@@ -422,13 +406,25 @@
   async function bootTerminal(opts) {
     const screen = document.getElementById("screen");
     if (!screen) return;
+    const session = { history: [], hIdx: 0, activeInput: null };
+    screen.addEventListener(
+      "click",
+      (ev) => {
+        if (ev.target.closest("a")) return;
+        const input = session.activeInput;
+        if (!input) return;
+        input.focus();
+        moveCaretToEnd(input);
+      },
+      { passive: true }
+    );
     const lines = (opts && opts.lines) || [];
     const intro = [
       { kind: "meta", text: `Last login: ${formatDate()} on console` },
       { kind: "gap" },
     ];
     await playLines(screen, intro.concat(lines));
-    mountPrompt(screen);
+    mountPrompt(screen, session);
   }
 
   window.bootTerminal = bootTerminal;
