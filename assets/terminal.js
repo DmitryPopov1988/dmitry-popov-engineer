@@ -462,7 +462,7 @@
     ];
     await playLines(screen, intro.concat(lines));
     session.bootHtml = screen.innerHTML;
-    mountPrompt(screen, session);
+    mountPrompt(screen, session, true);
     announceReady();
   }
 
