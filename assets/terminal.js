@@ -22,12 +22,12 @@
     whoami: "/",
     about: "/",
     home: "/",
-    experience: "experience.html",
-    career: "experience.html",
-    projects: "projects.html",
-    work: "projects.html",
-    contact: "contact.html",
-    contacts: "contact.html",
+    experience: "/experience.html",
+    career: "/experience.html",
+    projects: "/projects.html",
+    work: "/projects.html",
+    contact: "/contact.html",
+    contacts: "/contact.html",
   };
 
   const PAGE_LABELS = {
@@ -405,8 +405,21 @@
       const text = (e.clipboardData || window.clipboardData).getData(
         "text/plain"
       );
-      document.execCommand("insertText", false, text);
+      insertTextAtSelection(text);
     });
+  }
+
+  function insertTextAtSelection(text) {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    const node = document.createTextNode(text);
+    range.insertNode(node);
+    range.setStartAfter(node);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
   function moveCaretToEnd(node) {
