@@ -334,7 +334,7 @@
     }
   }
 
-  function mountPrompt(screen, session) {
+  function mountPrompt(screen, session, focus) {
     const wrap = el("div", "input-line");
     const ps1 = el("span", "ps1");
     ps1.innerHTML = ps1Html();
@@ -361,6 +361,10 @@
     screen.appendChild(wrap);
     scrollToBottom(screen);
     session.activeInput = input;
+    if (focus) {
+      input.focus({ preventScroll: true });
+      moveCaretToEnd(input);
+    }
 
     function getValue() {
       return input.textContent || "";
@@ -381,7 +385,7 @@
         }
         wrap.remove();
         handleCommand(screen, value, session);
-        mountPrompt(screen, session);
+        mountPrompt(screen, session, true);
       } else if (e.key === "ArrowUp") {
         if (session.history.length === 0) return;
         e.preventDefault();
@@ -395,7 +399,7 @@
       } else if (e.key === "l" && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         clearScreen(screen, session);
-        mountPrompt(screen, session);
+        mountPrompt(screen, session, true);
       }
     });
 
