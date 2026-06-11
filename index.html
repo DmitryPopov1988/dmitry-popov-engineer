@@ -31,10 +31,26 @@
   <link rel="alternate icon" href="assets/favicon.svg" />
 
   <link rel="stylesheet" href="assets/styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dmitry Popov",
+    "jobTitle": "Senior Software Engineer",
+    "url": "https://dmitry.popov.engineer/",
+    "email": "mailto:dmitry.popov.dev@icloud.com",
+    "sameAs": ["https://www.linkedin.com/in/dmitry-popov-12187816b"]
+  }
+  </script>
 </head>
 
 <body>
-  <main class="terminal" aria-label="Terminal session">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="terminal-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main-content" class="terminal" aria-label="Terminal session">
+    <h1 class="visually-hidden">Dmitry Popov — Senior Software Engineer</h1>
     <div class="topbar">
       <div class="dots" aria-hidden="true">
         <span class="dot red"></span>
@@ -42,13 +58,13 @@
         <span class="dot green"></span>
       </div>
       <div class="title">dmitry@popov.engineer — zsh — 80×24</div>
-      <div style="width: 56px" aria-hidden="true"></div>
+      <div class="topbar-spacer" aria-hidden="true"></div>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
 
   <nav class="site-nav" aria-label="Site sections">
-    <a class="nav-link" href="index.html" aria-current="page">whoami</a>
+    <a class="nav-link" href="/" aria-current="page">whoami</a>
     <a class="nav-link" href="experience.html">experience</a>
     <a class="nav-link" href="projects.html">projects</a>
     <a class="nav-link" href="contact.html">contact</a>

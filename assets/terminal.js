@@ -6,7 +6,8 @@
  *
  * Public API:
  *   bootTerminal({ page, lines })
- *     page  -- current page id ('whoami' | 'experience' | 'projects' | 'contact' | '404')
+ *     page  -- current page id ('whoami' | 'experience' | 'projects' | 'contact' | '404');
+ *            sets #screen aria-label when recognised
  *     lines -- array of line descriptors:
  *       { kind: 'gap' }
  *       { kind: 'cmd',  text: 'whoami' }
@@ -18,15 +19,23 @@
   "use strict";
 
   const ROUTES = {
-    whoami: "index.html",
-    about: "index.html",
-    home: "index.html",
+    whoami: "/",
+    about: "/",
+    home: "/",
     experience: "experience.html",
     career: "experience.html",
     projects: "projects.html",
     work: "projects.html",
     contact: "contact.html",
     contacts: "contact.html",
+  };
+
+  const PAGE_LABELS = {
+    whoami: "whoami",
+    experience: "experience",
+    projects: "projects",
+    contact: "contact",
+    "404": "404",
   };
 
   const CV_PATH = "assets/cv.pdf";
@@ -149,6 +158,7 @@
   }
 
   async function playLines(screen, lines) {
+    screen.setAttribute("aria-busy", "true");
     for (let idx = 0; idx < lines.length; idx++) {
       const line = lines[idx];
       const node = renderLineNode(line);
@@ -178,6 +188,7 @@
         await new Promise((r) => setTimeout(r, LINE_DELAY));
       }
     }
+    screen.setAttribute("aria-busy", "false");
   }
 
   function navigate(target) {
@@ -216,15 +227,15 @@
     scrollToBottom(screen);
   }
 
-  function printGap(screen) {
-    screen.appendChild(el("div", "line gap"));
+  function clearScreen(screen, session) {
+    if (session && session.bootHtml != null) {
+      screen.innerHTML = session.bootHtml;
+    } else {
+      screen.innerHTML = "";
+    }
   }
 
-  function clearScreen(screen) {
-    screen.innerHTML = "";
-  }
-
-  function handleCommand(screen, raw) {
+  function handleCommand(screen, raw, session) {
     const input = (raw || "").trim();
     if (!input) {
       printCmdEcho(screen, "");
@@ -254,7 +265,7 @@
       return;
     }
     if (cmd === "clear") {
-      clearScreen(screen);
+      clearScreen(screen, session);
       return;
     }
     if (cmd === "cv" || cmd === "resume") {
@@ -316,6 +327,13 @@
       .replace(/'/g, "&#39;");
   }
 
+  function announceReady() {
+    const status = document.getElementById("terminal-status");
+    if (status) {
+      status.textContent = "Content loaded. Terminal ready for commands.";
+    }
+  }
+
   function mountPrompt(screen, session) {
     const wrap = el("div", "input-line");
     const ps1 = el("span", "ps1");
@@ -362,7 +380,7 @@
           session.hIdx = session.history.length;
         }
         wrap.remove();
-        handleCommand(screen, value);
+        handleCommand(screen, value, session);
         mountPrompt(screen, session);
       } else if (e.key === "ArrowUp") {
         if (session.history.length === 0) return;
@@ -376,7 +394,7 @@
         setValue(session.history[session.hIdx] || "");
       } else if (e.key === "l" && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
-        clearScreen(screen);
+        clearScreen(screen, session);
         mountPrompt(screen, session);
       }
     });
@@ -389,8 +407,6 @@
       );
       document.execCommand("insertText", false, text);
     });
-
-    input.focus({ preventScroll: true });
   }
 
   function moveCaretToEnd(node) {
@@ -406,7 +422,11 @@
   async function bootTerminal(opts) {
     const screen = document.getElementById("screen");
     if (!screen) return;
-    const session = { history: [], hIdx: 0, activeInput: null };
+    const page = opts && opts.page;
+    if (page && PAGE_LABELS[page]) {
+      screen.setAttribute("aria-label", "Terminal output — " + PAGE_LABELS[page]);
+    }
+    const session = { history: [], hIdx: 0, activeInput: null, bootHtml: null };
     screen.addEventListener(
       "click",
       (ev) => {
@@ -424,8 +444,11 @@
       { kind: "gap" },
     ];
     await playLines(screen, intro.concat(lines));
+    session.bootHtml = screen.innerHTML;
     mountPrompt(screen, session);
+    announceReady();
   }
 
   window.bootTerminal = bootTerminal;
+  window.escapeHtml = escapeHtml;
 })();

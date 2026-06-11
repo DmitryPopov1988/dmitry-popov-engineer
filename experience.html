@@ -32,7 +32,11 @@
 </head>
 
 <body>
-  <main class="terminal" aria-label="Terminal session">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="terminal-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main-content" class="terminal" aria-label="Terminal session">
+    <h1 class="visually-hidden">Experience — Dmitry Popov</h1>
     <div class="topbar">
       <div class="dots" aria-hidden="true">
         <span class="dot red"></span>
@@ -40,13 +44,13 @@
         <span class="dot green"></span>
       </div>
       <div class="title">dmitry@popov.engineer — zsh — experience</div>
-      <div style="width: 56px" aria-hidden="true"></div>
+      <div class="topbar-spacer" aria-hidden="true"></div>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
 
   <nav class="site-nav" aria-label="Site sections">
-    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="/">whoami</a>
     <a class="nav-link" href="experience.html" aria-current="page">experience</a>
     <a class="nav-link" href="projects.html">projects</a>
     <a class="nav-link" href="contact.html">contact</a>
@@ -63,6 +67,7 @@
 
         { kind: "out", html: '<span class="tok-accent">Senior Java Software Engineer</span>  <span class="tok-muted">@ Alfa-Bank (Belarus)</span>      <span class="tok-key">04/2026 — present</span>' },
         { kind: "out", html: '  - Developing distributed systems in a regulated banking environment.' },
+        { kind: "out", html: '  - <span class="tok-key">stack</span>: Java 25, Spring, MongoDB' },
         { kind: "gap" },
 
         { kind: "out", html: '<span class="tok-accent">Senior Software Engineer (Backend / Full-Stack)</span>  <span class="tok-muted">@ Godel Technologies Europe (Poland)</span>      <span class="tok-key">01/2019 — 04/2026</span>' },

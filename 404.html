@@ -31,7 +31,11 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <main class="terminal" aria-label="Terminal session">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="terminal-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="main-content" class="terminal" aria-label="Terminal session">
+    <h1 class="visually-hidden">Page not found — Dmitry Popov</h1>
     <div class="topbar">
       <div class="dots" aria-hidden="true">
         <span class="dot red"></span>
@@ -39,13 +43,13 @@
         <span class="dot green"></span>
       </div>
       <div class="title">dmitry@popov.engineer — zsh — 404</div>
-      <div style="width: 56px" aria-hidden="true"></div>
+      <div class="topbar-spacer" aria-hidden="true"></div>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
 
   <nav class="site-nav" aria-label="Site sections">
-    <a class="nav-link" href="index.html">whoami</a>
+    <a class="nav-link" href="/">whoami</a>
     <a class="nav-link" href="experience.html">experience</a>
     <a class="nav-link" href="projects.html">projects</a>
     <a class="nav-link" href="contact.html">contact</a>
@@ -54,15 +58,6 @@
 
   <script src="assets/terminal.js"></script>
   <script>
-    function escapeHtml(s) {
-      return String(s)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
     bootTerminal({
       page: "404",
       lines: [

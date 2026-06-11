@@ -19,12 +19,14 @@ session with an interactive prompt that doubles as the navigation.
 │   ├── terminal.js           # typing engine + interactive prompt
 │   ├── favicon.svg           # `>` glyph favicon
 │   ├── fonts/                # self-hosted JetBrains Mono (woff2)
-│   ├── og.svg                # default share image source (1200×630, used by index/contact/404)
+│   ├── og.svg                # default share image source (1200×630, used by index/404)
 │   ├── og.png                # rendered default share image
 │   ├── og-experience.svg     # share image source for experience.html
 │   ├── og-experience.png     # rendered share image for experience.html
 │   ├── og-projects.svg       # share image source for projects.html
 │   ├── og-projects.png       # rendered share image for projects.html
+│   ├── og-contact.svg        # share image source for contact.html
+│   ├── og-contact.png        # rendered share image for contact.html
 │   ├── cv.html               # CV source (terminal-dark theme, print-optimized)
 │   └── cv.pdf                # CV rendered to PDF (served by the `cv` command)
 ├── CNAME               # custom domain for GitHub Pages
@@ -94,7 +96,7 @@ matching PNG with headless Chrome — repeat for each `og*.svg` you
 changed:
 
 ```bash
-NAME=og   # one of: og, og-experience, og-projects
+NAME=og   # one of: og, og-experience, og-projects, og-contact
 
 cat > /tmp/og_wrap.html <<HTML
 <!DOCTYPE html><meta charset="UTF-8">
