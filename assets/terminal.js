@@ -38,7 +38,7 @@
     "404": "404",
   };
 
-  const CV_PATH = "assets/cv.pdf";
+  const CV_PATH = "/assets/cv.pdf";
 
   const HELP_HTML = [
     '<span class="tok-muted">Available commands:</span>',
