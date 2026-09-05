@@ -178,7 +178,6 @@
         const cursor = appendCursor(node);
         await typeHtml(node, line.html || "");
         // typeHtml replaces innerHTML, so cursor is gone already
-        removeCursor(node);
         cursor.remove();
       }
 
