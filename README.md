@@ -15,7 +15,8 @@ session with an interactive prompt that doubles as the navigation.
 ├── contact.html        # > contact (email, linkedin, cv)
 ├── 404.html            # terminal-style "command not found"
 ├── assets/
-│   ├── styles.css            # shared stylesheet (GitHub-dark inspired)
+│   ├── styles.css            # shared stylesheet (dark + light palettes)
+│   ├── theme-boot.js         # applies the saved theme before first paint
 │   ├── terminal.js           # typing engine + interactive prompt
 │   ├── favicon.svg           # `>` glyph favicon
 │   ├── fonts/                # self-hosted JetBrains Mono (woff2)
@@ -45,10 +46,31 @@ Once a page finishes typing, an interactive prompt appears. Supported commands:
 - `contact` / `contacts` — get in touch
 - `cv` / `resume` — download CV
 - `ls` — list sections
+- `theme light|dark|auto` — switch color theme (same as the button in the title bar)
 - `help`, `?` — show help
 - `clear`, `Ctrl/Cmd+L` — clear the screen
 - `cd <section>` — same as the section name
 - `↑` / `↓` — navigate command history
+
+## Without JavaScript
+
+The terminal is rendered by JavaScript, so every page ships a `<noscript>`
+fallback: a static, semantic version of the same content (`article`, `section`,
+`h1`–`h3`, `dl`, `ul` list items, `time`, `address`).
+
+`<html class="no-js">` is in the markup; an inline script removes the class
+before first paint, and with scripting disabled the `.no-js` rules hide the
+terminal and show the document instead.
+
+## Window controls
+
+The traffic lights in the title bar behave like the real ones:
+
+- **red** — ends the session (`logout`), then shows a desktop with a `terminal`
+  icon; click anywhere or press any key to reconnect
+- **yellow** — collapses the window down to its title bar; click again to restore
+- **green** — expands the window to fill the viewport, keeping its margins,
+  rounded corners and shadow; `Esc` also exits
 
 ## Local development
 

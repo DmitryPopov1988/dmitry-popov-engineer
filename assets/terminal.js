@@ -48,14 +48,20 @@
     '  <span class="tok-key">contact</span>     how to reach me',
     '  <span class="tok-key">cv</span>          download CV (PDF)',
     '  <span class="tok-key">ls</span>          list sections',
+    '  <span class="tok-key">theme</span>       light | dark | auto',
     '  <span class="tok-key">clear</span>       clear the screen',
     '  <span class="tok-key">help</span>        show this message',
     '<span class="tok-muted">Tip: <span class="tok-accent">cd projects</span> works too. Use ↑/↓ for history.</span>',
   ].join("\n");
 
-  const reducedMotion =
+  // Live, reactive check: the OS preference can change while the page is open.
+  const reducedMotionMedia =
     window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function prefersReducedMotion() {
+    return !!(reducedMotionMedia && reducedMotionMedia.matches);
+  }
 
   const TYPE_SPEED = 14;        // ms per char
   const LINE_DELAY = 90;        // ms between lines
@@ -78,7 +84,16 @@
   }
 
   function formatDate() {
-    return new Date().toString().replace(/\sGMT.*$/, "").trim();
+    // Locale-independent "Tue Nov 13 2026 21:17:48" — no timezone suffix.
+    const now = new Date();
+    const date = now.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+    const time = now.toLocaleTimeString("en-US", { hour12: false });
+    return (date + " " + time).replace(/,/g, "");
   }
 
   function renderLineNode(line) {
@@ -103,7 +118,7 @@
 
   function typeText(target, text, speed) {
     return new Promise((resolve) => {
-      if (reducedMotion || !text) {
+      if (prefersReducedMotion() || !text) {
         target.textContent = text || "";
         return resolve();
       }
@@ -121,7 +136,7 @@
     // For 'out' lines we set HTML at once (links and tokens need to be live).
     // Animation is achieved by gradually revealing characters using a temp clone.
     return new Promise((resolve) => {
-      if (reducedMotion || !html) {
+      if (prefersReducedMotion() || !html) {
         target.innerHTML = html || "";
         return resolve();
       }
@@ -152,42 +167,42 @@
     return c;
   }
 
-  function removeCursor(node) {
-    const c = node.querySelector(".cursor");
-    if (c) c.remove();
-  }
-
-  async function playLines(screen, lines) {
+  async function playLines(screen, lines, gen) {
     screen.setAttribute("aria-busy", "true");
-    for (let idx = 0; idx < lines.length; idx++) {
-      const line = lines[idx];
-      const node = renderLineNode(line);
-      screen.appendChild(node);
+    try {
+      for (let idx = 0; idx < lines.length; idx++) {
+        // A newer boot (or a closed session) supersedes this one.
+        if (gen !== undefined && gen !== bootGen) return;
+        const line = lines[idx];
+        const node = renderLineNode(line);
+        screen.appendChild(node);
 
-      if (line.kind === "gap") {
-        // nothing to type
-      } else if (line.kind === "meta") {
-        const cursor = appendCursor(node);
-        await typeText(node, line.text || "", META_SPEED);
-        cursor.remove();
-      } else if (line.kind === "cmd") {
-        const cursor = appendCursor(node);
-        await typeText(node._cmdSpan, line.text || "", TYPE_SPEED);
-        cursor.remove();
-      } else if (line.kind === "out") {
-        const cursor = appendCursor(node);
-        await typeHtml(node, line.html || "");
-        // typeHtml replaces innerHTML, so cursor is gone already
-        cursor.remove();
+        if (line.kind === "gap") {
+          // nothing to type
+        } else if (line.kind === "meta") {
+          const cursor = appendCursor(node);
+          await typeText(node, line.text || "", META_SPEED);
+          cursor.remove();
+        } else if (line.kind === "cmd") {
+          const cursor = appendCursor(node);
+          await typeText(node._cmdSpan, line.text || "", TYPE_SPEED);
+          cursor.remove();
+        } else if (line.kind === "out") {
+          const cursor = appendCursor(node);
+          await typeHtml(node, line.html || "");
+          // typeHtml replaces innerHTML, so cursor is gone already
+          cursor.remove();
+        }
+
+        scrollToBottom(screen);
+
+        if (!prefersReducedMotion() && idx < lines.length - 1) {
+          await new Promise((r) => setTimeout(r, LINE_DELAY));
+        }
       }
-
-      scrollToBottom(screen);
-
-      if (!reducedMotion && idx < lines.length - 1) {
-        await new Promise((r) => setTimeout(r, LINE_DELAY));
-      }
+    } finally {
+      screen.setAttribute("aria-busy", "false");
     }
-    screen.setAttribute("aria-busy", "false");
   }
 
   function navigate(target) {
@@ -195,7 +210,7 @@
   }
 
   function downloadCv(screen) {
-    // Trigger download in a hidden iframe-like anchor
+    // Trigger the download through a transient anchor element.
     const a = document.createElement("a");
     a.href = CV_PATH;
     a.download = "Dmitry_Popov_CV.pdf";
@@ -250,6 +265,30 @@
 
     if (cmd === "help" || cmd === "?") {
       printOut(screen, HELP_HTML);
+      return;
+    }
+    if (cmd === "theme") {
+      const value = (arg || "").trim().toLowerCase();
+      if (value === "light" || value === "dark" || value === "auto") {
+        setTheme(value);
+        printOut(
+          screen,
+          '<span class="tok-muted">theme → </span><span class="tok-key">' +
+            value +
+            "</span>"
+        );
+      } else {
+        printOut(
+          screen,
+          '<span class="tok-muted">pref: </span><span class="tok-key">' +
+            getThemePref() +
+            '</span> <span class="tok-muted">(effective: ' +
+            getTheme() +
+            ")</span>\n" +
+            '<span class="tok-muted">usage: </span>' +
+            '<span class="tok-key">theme light|dark|auto</span>'
+        );
+      }
       return;
     }
     if (cmd === "ls") {
@@ -324,6 +363,294 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+
+  /* ---- Theme switching -------------------------------------------------
+     The initial palette is applied by assets/theme-boot.js before first
+     paint. Here we only handle user-initiated changes: the topbar button,
+     the `theme` command, OS preference changes while on "auto", and other
+     tabs of the same origin. */
+
+  const THEME_COLORS = { dark: "#0d1117", light: "#ffffff" };
+
+  function prefersLight() {
+    return !!(
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    );
+  }
+
+  function getThemePref() {
+    return document.documentElement.dataset.themePref || "auto";
+  }
+
+  function getTheme() {
+    return document.documentElement.dataset.theme || "dark";
+  }
+
+  function setTheme(pref, persist) {
+    // Coerce unknown values to "auto" — the same contract as theme-boot.js.
+    if (pref !== "light" && pref !== "dark") pref = "auto";
+    const theme = pref === "auto" ? (prefersLight() ? "light" : "dark") : pref;
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    root.dataset.themePref = pref;
+
+    if (persist !== false) {
+      try {
+        localStorage.setItem("theme", pref);
+      } catch (e) {
+        /* storage unavailable: the choice just won't survive a reload */
+      }
+    }
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", THEME_COLORS[theme] || THEME_COLORS.dark);
+    }
+
+    const toggle = document.getElementById("theme-toggle");
+    if (toggle) {
+      toggle.textContent = pref;
+      toggle.setAttribute("aria-label", "Color theme: " + pref);
+    }
+  }
+
+  function initTheme() {
+    const toggle = document.getElementById("theme-toggle");
+    if (toggle) {
+      toggle.addEventListener("click", () => {
+        setTheme(getTheme() === "dark" ? "light" : "dark");
+      });
+    }
+
+    if (window.matchMedia) {
+      const mql = window.matchMedia("(prefers-color-scheme: light)");
+      const onChange = () => {
+        if (getThemePref() === "auto") setTheme("auto", false);
+      };
+      if (mql.addEventListener) mql.addEventListener("change", onChange);
+      else if (mql.addListener) mql.addListener(onChange);
+    }
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === "theme") setTheme(e.newValue || "auto", false);
+    });
+
+    // Reflect the state applied by theme-boot.js in the button label.
+    setTheme(getThemePref(), false);
+  }
+
+  /* ---- Window chrome (traffic lights) -----------------------------------
+     close    -> ends the session, then shows a desktop with a reconnect icon
+     minimize -> collapses the window down to its title bar
+     zoom     -> expands the window to fill the viewport (Esc also exits) */
+
+  let activeSession = null;
+  let lastBootOpts = null;
+  let bootGen = 0;
+  let screenWired = false;
+  let desktopEl = null;
+
+  function announce(message) {
+    const status = document.getElementById("terminal-status");
+    if (status) status.textContent = message;
+  }
+
+  function terminalWindow() {
+    return document.getElementById("main-content");
+  }
+
+  // The screen survives reboots, so its click handler is wired only once and
+  // always talks to the session that is currently mounted.
+  function wireScreenClick(screen) {
+    if (screenWired) return;
+    screenWired = true;
+    screen.addEventListener(
+      "click",
+      (ev) => {
+        if (ev.target.closest("a")) return;
+        const input = activeSession && activeSession.activeInput;
+        if (!input) return;
+        input.focus();
+        moveCaretToEnd(input);
+      },
+      { passive: true }
+    );
+  }
+
+  function buildDesktop() {
+    const wrap = el("div", "desktop");
+    wrap.id = "desktop";
+    wrap.hidden = true;
+
+    const button = el("button", "desktop-icon");
+    button.type = "button";
+    button.id = "reconnect";
+    button.innerHTML =
+      '<svg class="desktop-icon-glyph" viewBox="0 0 24 24" aria-hidden="true">' +
+      '<rect x="2.75" y="3.75" width="18.5" height="14.5" rx="2.5"/>' +
+      '<path d="M6.6 8.9 9.3 11l-2.7 2.1M11.5 13.1h5.5"/></svg>' +
+      '<span class="desktop-label">terminal</span>';
+
+    const hint = el(
+      "p",
+      "desktop-hint",
+      "Click anywhere or press any key to reconnect"
+    );
+
+    wrap.appendChild(button);
+    wrap.appendChild(hint);
+    wrap.addEventListener("click", openSession);
+    document.body.appendChild(wrap);
+    return wrap;
+  }
+
+  function resetWindowState() {
+    const win = terminalWindow();
+    if (win) {
+      win.classList.remove("is-minimized");
+      win.style.height = "";
+    }
+    document.body.classList.remove("is-zoomed");
+    const min = document.querySelector(".dot.min");
+    const zoom = document.querySelector(".dot.zoom");
+    if (min) min.setAttribute("aria-pressed", "false");
+    if (zoom) zoom.setAttribute("aria-pressed", "false");
+  }
+
+  function closeSession() {
+    const screen = document.getElementById("screen");
+    bootGen++; // stops any typing still in flight
+    if (activeSession) activeSession.activeInput = null;
+
+    if (screen) {
+      printCmdEcho(screen, "logout");
+      printOut(
+        screen,
+        '<span class="tok-muted">Connection to popov.engineer closed.</span>'
+      );
+    }
+
+    const finish = () => {
+      resetWindowState();
+      document.body.classList.add("is-closed");
+
+      if (!desktopEl) desktopEl = buildDesktop();
+      desktopEl.hidden = false;
+
+      const button = document.getElementById("reconnect");
+      if (button) button.focus({ preventScroll: true });
+      announce("Session closed. Click anywhere or press any key to reconnect.");
+    };
+
+    if (prefersReducedMotion()) finish();
+    else setTimeout(finish, 600);
+  }
+
+  function openSession() {
+    if (!document.body.classList.contains("is-closed")) return;
+    if (desktopEl) desktopEl.hidden = true;
+    document.body.classList.remove("is-closed");
+
+    const screen = document.getElementById("screen");
+    if (screen) {
+      screen.innerHTML = "";
+      screen.inert = false;
+      screen.removeAttribute("aria-hidden");
+    }
+
+    resetWindowState();
+    announce("Session restored.");
+    bootTerminal(lastBootOpts || {});
+  }
+
+  function setCollapsed(collapsed) {
+    const win = terminalWindow();
+    if (!win) return;
+
+    const bar = win.querySelector(".topbar");
+    const barHeight = bar ? Math.ceil(bar.getBoundingClientRect().height) : 34;
+    const screen = document.getElementById("screen");
+
+    if (collapsed) {
+      if (document.body.classList.contains("is-zoomed")) toggleZoom(false);
+      win.style.height = win.offsetHeight + "px";
+      win.classList.add("is-minimized");
+      win.style.height = barHeight + "px";
+      if (screen) {
+        screen.inert = true;
+        screen.setAttribute("aria-hidden", "true");
+      }
+      if (activeSession && activeSession.activeInput) {
+        activeSession.activeInput.blur();
+      }
+      announce("Window minimized.");
+    } else {
+      win.classList.remove("is-minimized");
+      if (screen) {
+        screen.inert = false;
+        screen.removeAttribute("aria-hidden");
+      }
+      win.style.height = "";
+      const natural = win.offsetHeight;
+      win.style.height = barHeight + "px";
+      win.style.height = natural + "px";
+      setTimeout(
+        () => {
+          if (!win.classList.contains("is-minimized")) win.style.height = "";
+        },
+        prefersReducedMotion() ? 0 : 260
+      );
+      announce("Window restored.");
+    }
+  }
+
+  function toggleMinimize() {
+    const win = terminalWindow();
+    if (!win) return;
+    const minimize = !win.classList.contains("is-minimized");
+    setCollapsed(minimize);
+    const button = document.querySelector(".dot.min");
+    if (button) button.setAttribute("aria-pressed", String(minimize));
+  }
+
+  function toggleZoom(force) {
+    const zoomed =
+      force === undefined
+        ? !document.body.classList.contains("is-zoomed")
+        : !!force;
+    document.body.classList.toggle("is-zoomed", zoomed);
+    const button = document.querySelector(".dot.zoom");
+    if (button) button.setAttribute("aria-pressed", String(zoomed));
+    announce(zoomed ? "Window expanded to full screen." : "Window restored.");
+  }
+
+  function initChrome() {
+    const close = document.querySelector(".dot.close");
+    const min = document.querySelector(".dot.min");
+    const zoom = document.querySelector(".dot.zoom");
+
+    if (close) close.addEventListener("click", closeSession);
+    if (min) min.addEventListener("click", toggleMinimize);
+    if (zoom) zoom.addEventListener("click", () => toggleZoom());
+
+    document.addEventListener("keydown", (ev) => {
+      if (document.body.classList.contains("is-closed")) {
+        // Don't swallow browser shortcuts (Cmd/Ctrl+W, +R, +L, +T) or bare
+        // modifier keypresses — only plain keys should reconnect.
+        if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+        if (ev.key === "Tab" || ev.key === "Shift" || ev.key === "CapsLock") {
+          return;
+        }
+        ev.preventDefault();
+        openSession();
+        return;
+      }
+      if (ev.key === "Escape" && document.body.classList.contains("is-zoomed")) {
+        toggleZoom(false);
+      }
+    });
   }
 
   function announceReady() {
@@ -438,32 +765,31 @@
   async function bootTerminal(opts) {
     const screen = document.getElementById("screen");
     if (!screen) return;
+
+    lastBootOpts = opts || {};
+    const gen = ++bootGen;
+
     const page = opts && opts.page;
     if (page && PAGE_LABELS[page]) {
       screen.setAttribute("aria-label", "Terminal output — " + PAGE_LABELS[page]);
     }
     const session = { history: [], hIdx: 0, activeInput: null, bootHtml: null };
-    screen.addEventListener(
-      "click",
-      (ev) => {
-        if (ev.target.closest("a")) return;
-        const input = session.activeInput;
-        if (!input) return;
-        input.focus();
-        moveCaretToEnd(input);
-      },
-      { passive: true }
-    );
+    activeSession = session;
+    wireScreenClick(screen);
     const lines = (opts && opts.lines) || [];
     const intro = [
       { kind: "meta", text: `Last login: ${formatDate()} on console` },
       { kind: "gap" },
     ];
-    await playLines(screen, intro.concat(lines));
+    await playLines(screen, intro.concat(lines), gen);
+    if (gen !== bootGen) return;
     session.bootHtml = screen.innerHTML;
     mountPrompt(screen, session, true);
     announceReady();
   }
+
+  initTheme();
+  initChrome();
 
   window.bootTerminal = bootTerminal;
   window.escapeHtml = escapeHtml;

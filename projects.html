@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -30,6 +30,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <link rel="manifest" href="assets/manifest.webmanifest" />
+  <script>document.documentElement.classList.remove("no-js");</script>
+  <script src="assets/theme-boot.js"></script>
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="preload" as="font" href="assets/fonts/JetBrainsMono-Regular.woff2"
         type="font/woff2" crossorigin />
@@ -42,16 +44,71 @@
   <main id="main-content" class="terminal" aria-label="Terminal session">
     <h1 class="visually-hidden">Projects — Dmitry Popov</h1>
     <div class="topbar">
-      <div class="dots" aria-hidden="true">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
+      <div class="dots">
+        <button class="dot close" type="button" aria-label="Close session">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.7 3.7 8.3 8.3M8.3 3.7 3.7 8.3"/></svg>
+        </button>
+        <button class="dot min" type="button" aria-label="Minimize window" aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.4 6h5.2"/></svg>
+        </button>
+        <button class="dot zoom" type="button" aria-label="Maximize window" aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.8 3.6h3.6v3.6z"/><path d="M7.2 8.4H3.6V4.8z"/></svg>
+        </button>
       </div>
-      <div class="title">dmitry@popov.engineer — zsh — projects</div>
-      <div class="topbar-spacer" aria-hidden="true"></div>
+      <div class="title"><svg class="title-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.6 3.4a1.1 1.1 0 0 1 1.1-1.1h1.9l1 1.2h4.8a1.1 1.1 0 0 1 1.1 1.1v4.5a1.1 1.1 0 0 1-1.1 1.1H2.7a1.1 1.1 0 0 1-1.1-1.1z"/></svg> dmitry@popov.engineer — zsh — projects</div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Color theme: auto" title="theme light|dark|auto">auto</button>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
+
+  <noscript>
+    <article class="fallback">
+      <h1>Projects — Dmitry Popov</h1>
+      <p class="fallback-note">This page normally runs as an interactive terminal. With JavaScript disabled, here is the same content as a plain document.</p>
+      <p class="fallback-note">UK outsourcing client names omitted under NDA.</p>
+
+      <section>
+        <h2>alfa-bank-by</h2>
+        <p>Senior Java Software Engineer · <time datetime="2026-04">April 2026</time> — present</p>
+        <dl>
+          <dt>Stack</dt><dd>Java 25, Spring, MongoDB</dd>
+          <dt>Focus</dt><dd>distributed systems in a regulated banking environment</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>uk-fintech-insurance</h2>
+        <p>Senior Full-Stack Engineer · <time datetime="2024-04">April 2024</time> — <time datetime="2026-04">April 2026</time></p>
+        <dl>
+          <dt>Scale</dt><dd>~10M monthly online users on the platform</dd>
+          <dt>Role</dt><dd>full-stack delivery on four of the platform’s customer-facing web applications</dd>
+          <dt>Stack</dt><dd>TypeScript, Node.js, Jest, Playwright</dd>
+          <dt>Focus</dt><dd>frontend validation and client-side scripting; web application security and accessibility standards</dd>
+          <dt>Shipped</dt><dd>contract- and end-to-end-tested changes behind feature flags</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>uk-energy-platform</h2>
+        <p>Senior Backend Engineer · <time datetime="2019-01">January 2019</time> — <time datetime="2024-04">April 2024</time></p>
+        <dl>
+          <dt>Scale</dt><dd>distributed microservices platform, customer base of 2M+</dd>
+          <dt>Scope</dt><dd>multiple core business domains, owned end-to-end</dd>
+          <dt>Stack</dt><dd>Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra, Kubernetes, Jenkins, Liquibase, Kibana, Grafana, New Relic</dd>
+          <dt>Focus</dt><dd>high-availability backend services; third-party integrations; monitoring dashboards, notification workflows and customer-facing email templates</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>dmitry-popov-engineer</h2>
+        <p>This site.</p>
+        <dl>
+          <dt>Stack</dt><dd>plain HTML, CSS and JavaScript</dd>
+        </dl>
+      </section>
+    </article>
+  </noscript>
 
   <nav class="site-nav" aria-label="Site sections">
     <a class="nav-link" href="/">whoami</a>

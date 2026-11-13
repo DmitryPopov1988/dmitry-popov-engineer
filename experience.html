@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -30,6 +30,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <link rel="manifest" href="assets/manifest.webmanifest" />
+  <script>document.documentElement.classList.remove("no-js");</script>
+  <script src="assets/theme-boot.js"></script>
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="preload" as="font" href="assets/fonts/JetBrainsMono-Regular.woff2"
         type="font/woff2" crossorigin />
@@ -42,16 +44,63 @@
   <main id="main-content" class="terminal" aria-label="Terminal session">
     <h1 class="visually-hidden">Experience — Dmitry Popov</h1>
     <div class="topbar">
-      <div class="dots" aria-hidden="true">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
+      <div class="dots">
+        <button class="dot close" type="button" aria-label="Close session">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.7 3.7 8.3 8.3M8.3 3.7 3.7 8.3"/></svg>
+        </button>
+        <button class="dot min" type="button" aria-label="Minimize window" aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.4 6h5.2"/></svg>
+        </button>
+        <button class="dot zoom" type="button" aria-label="Maximize window" aria-pressed="false">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.8 3.6h3.6v3.6z"/><path d="M7.2 8.4H3.6V4.8z"/></svg>
+        </button>
       </div>
-      <div class="title">dmitry@popov.engineer — zsh — experience</div>
-      <div class="topbar-spacer" aria-hidden="true"></div>
+      <div class="title"><svg class="title-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.6 3.4a1.1 1.1 0 0 1 1.1-1.1h1.9l1 1.2h4.8a1.1 1.1 0 0 1 1.1 1.1v4.5a1.1 1.1 0 0 1-1.1 1.1H2.7a1.1 1.1 0 0 1-1.1-1.1z"/></svg> dmitry@popov.engineer — zsh — experience</div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Color theme: auto" title="theme light|dark|auto">auto</button>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
+
+  <noscript>
+    <article class="fallback">
+      <h1>Experience — Dmitry Popov</h1>
+      <p class="fallback-note">This page normally runs as an interactive terminal. With JavaScript disabled, here is the same content as a plain document.</p>
+
+      <section>
+        <h2>Senior Java Software Engineer</h2>
+        <p>Alfa-Bank (Belarus) · <time datetime="2026-04">April 2026</time> — present</p>
+        <ul>
+          <li>Developing distributed systems in a regulated banking environment.</li>
+          <li>Stack: Java 25, Spring, MongoDB.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Senior Software Engineer (Backend / Full-Stack)</h2>
+        <p>Godel Technologies Europe (Poland) · <time datetime="2019-01">January 2019</time> — <time datetime="2026-04">April 2026</time></p>
+        <p>Outsourcing engineer embedded in cross-functional teams delivering high-load production systems for UK-based enterprise clients.</p>
+
+        <h3>UK FinTech / Insurance · <time datetime="2024-04">April 2024</time> — <time datetime="2026-04">April 2026</time></h3>
+        <ul>
+          <li>Senior Full-Stack Engineer on four of the platform’s customer-facing web applications; the platform served ~10M monthly online users.</li>
+          <li>Implemented frontend validation and client-side scripting; hardened web application security and improved accessibility compliance.</li>
+          <li>Collaborated with product, QA and SRE to ship changes behind feature flags with contract and end-to-end tests.</li>
+        </ul>
+
+        <h3>UK Energy Market · <time datetime="2019-01">January 2019</time> — <time datetime="2024-04">April 2024</time></h3>
+        <ul>
+          <li>Designed and developed distributed, microservices-based backend services handling a customer base of 2M+.</li>
+          <li>Owned several core business domains end-to-end, from design to production support.</li>
+          <li>Delivered high-availability services through containerised deployments and automated CI/CD pipelines.</li>
+          <li>Integrated with third-party providers; designed monitoring dashboards, notification workflows and customer-facing email templates.</li>
+        </ul>
+      </section>
+
+      <h2>Education</h2>
+      <p>Brest State Technical University, Republic of Belarus — Bachelor’s, IT Engineer · <time datetime="2007-09">September 2007</time> — <time datetime="2013-06">June 2013</time></p>
+    </article>
+  </noscript>
 
   <nav class="site-nav" aria-label="Site sections">
     <a class="nav-link" href="/">whoami</a>
