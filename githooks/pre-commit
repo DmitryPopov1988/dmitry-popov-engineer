@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# Pre-commit guard for dmitry.popov.engineer
+#
+# Blocks a commit when the staged changes look like they contain credentials,
+# private keys, absolute home paths or personal identifiers. Only the *added*
+# lines of the staged diff are scanned, so previously committed content never
+# re-triggers the check.
+#
+# Install once per clone:
+#   git config core.hooksPath githooks
+#
+# Bypass, only when you are sure the match is harmless:
+#   git commit --no-verify
+
+set -u
+
+SECRETS='(password|passwd|secret|api[_-]?key|access[_-]?key|auth[_-]?token)[[:space:]]*[:=]|bearer[[:space:]]+[A-Za-z0-9._-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|ghp_[A-Za-z0-9]{36}|gho_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|[A-Za-z0-9+/]{80,}={0,2}'
+
+PERSONAL='/Users/[A-Za-z0-9._-]+/|\+375|passport'
+
+diff=$(git -c core.quotePath=false diff --cached --no-color --no-ext-diff -U0 \
+         --diff-filter=ACMR -- . ':(exclude)githooks/**') || exit 0
+
+[ -n "$diff" ] || exit 0
+
+hits=$(printf '%s\n' "$diff" | awk '
+  /^\+\+\+ / {
+    file = substr($0, 7)
+    if (file == "/dev/null") file = ""
+    next
+  }
+  /^@@ / {
+    split($0, range, "+")
+    split(range[2], span, ",")
+    line = span[1] + 0
+    next
+  }
+  /^\+/ {
+    if (file != "") printf "%s:%d:%s\n", file, line, substr($0, 2)
+    line++
+  }
+' | grep -E -e "$SECRETS" -e "$PERSONAL")
+
+if [ -n "$hits" ]; then
+  printf '\n'
+  printf '  pre-commit: possible sensitive data in staged changes\n\n'
+  printf '%s\n' "$hits" | awk '{ printf "    %.150s\n", $0 }'
+  printf '\n  Fix or unstage the lines above. If the match is harmless:\n'
+  printf '    git commit --no-verify\n\n'
+  exit 1
+fi
+
+exit 0

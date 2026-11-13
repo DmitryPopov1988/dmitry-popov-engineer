@@ -81,6 +81,22 @@ python3 -m http.server 5173
 # then open http://localhost:5173
 ```
 
+## Pre-commit hook
+
+`githooks/pre-commit` blocks a commit when the staged changes look like they
+contain credentials, private keys, absolute home paths or personal identifiers.
+It scans only the added lines of the staged diff — so existing content never
+re-triggers it — and skips the hook directory itself.
+
+Enable it once per clone:
+
+```bash
+git config core.hooksPath githooks
+```
+
+If a match is a false positive, bypass it deliberately with
+`git commit --no-verify`.
+
 ## Deploying to dmitry.popov.engineer
 
 This repo is configured for **GitHub Pages** with a custom subdomain.
