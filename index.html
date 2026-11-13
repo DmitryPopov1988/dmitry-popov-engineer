@@ -70,8 +70,6 @@
         </button>
       </div>
       <div class="title"><svg class="title-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.6 3.4a1.1 1.1 0 0 1 1.1-1.1h1.9l1 1.2h4.8a1.1 1.1 0 0 1 1.1 1.1v4.5a1.1 1.1 0 0 1-1.1 1.1H2.7a1.1 1.1 0 0 1-1.1-1.1z"/></svg> dmitry@popov.engineer — zsh — 80×24</div>
-      <button id="theme-toggle" class="theme-toggle" type="button"
-              aria-label="Color theme: auto" title="theme light|dark|auto">auto</button>
     </div>
     <div id="screen" class="screen" role="region" aria-label="Terminal output"></div>
   </main>
@@ -85,16 +83,17 @@
 
       <h2>Stack</h2>
       <dl>
-        <dt>Backend</dt><dd>Java 11/17/25, Spring (Boot, MVC, Data, Security)</dd>
-        <dt>Web</dt><dd>TypeScript, JavaScript, Node.js, Express</dd>
-        <dt>Data</dt><dd>PostgreSQL, MongoDB, Apache Cassandra, Liquibase</dd>
-        <dt>Messaging</dt><dd>ActiveMQ</dd>
-        <dt>Infra</dt><dd>Docker, Kubernetes, Terraform, Jenkins, Puppet, Rundeck</dd>
-        <dt>Testing</dt><dd>JUnit, AssertJ, JBehave, Cucumber, Jest, Playwright</dd>
-        <dt>Observability</dt><dd>Grafana, Kibana, OpenSearch, Dynatrace, New Relic</dd>
-        <dt>VCS</dt><dd>GitHub, GitLab, BitBucket</dd>
-        <dt>AI tools</dt><dd>Cursor, Windsurf, Codex</dd>
+        <dt>Core</dt><dd>Java, Spring, TypeScript, Node.js</dd>
+        <dt>Data</dt><dd>PostgreSQL, MongoDB, Redis</dd>
+        <dt>Ops</dt><dd>Kubernetes, Grafana/OpenSearch</dd>
       </dl>
+
+      <h2>Focus</h2>
+      <ul>
+        <li>Distributed systems that stay up at 3am.</li>
+        <li>Observability before it’s an incident, not after.</li>
+        <li>AI-assisted development workflows that survive code review.</li>
+      </ul>
 
       <h2>Certifications</h2>
       <ul>
@@ -129,15 +128,15 @@
         { kind: "gap" },
 
         { kind: "cmd", text: "stack" },
-        { kind: "out", html: '<span class="tok-key">backend</span>:       Java 11/17/25, Spring (Boot, MVC, Data, Security)' },
-        { kind: "out", html: '<span class="tok-key">web</span>:           TypeScript, JavaScript, Node.js, Express' },
-        { kind: "out", html: '<span class="tok-key">data</span>:          PostgreSQL, MongoDB, Apache Cassandra, Liquibase' },
-        { kind: "out", html: '<span class="tok-key">messaging</span>:     ActiveMQ' },
-        { kind: "out", html: '<span class="tok-key">infra</span>:         Docker, Kubernetes, Terraform, Jenkins, Puppet, Rundeck' },
-        { kind: "out", html: '<span class="tok-key">testing</span>:       JUnit, AssertJ, JBehave, Cucumber, Jest, Playwright' },
-        { kind: "out", html: '<span class="tok-key">observability</span>: Grafana, Kibana, OpenSearch, Dynatrace, New Relic' },
-        { kind: "out", html: '<span class="tok-key">vcs</span>:           GitHub, GitLab, BitBucket' },
-        { kind: "out", html: '<span class="tok-key">ai tools</span>:      Cursor, Windsurf, Codex' },
+        { kind: "out", html: '<span class="tok-key">core</span>:     Java, Spring, TypeScript, Node.js' },
+        { kind: "out", html: '<span class="tok-key">data</span>:     PostgreSQL, MongoDB, Redis' },
+        { kind: "out", html: '<span class="tok-key">ops</span>:      Kubernetes, Grafana/OpenSearch' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "focus" },
+        { kind: "out", html: '  - distributed systems that stay up at 3am' },
+        { kind: "out", html: '  - observability before it’s an incident, not after' },
+        { kind: "out", html: '  - AI-assisted dev workflows that survive code review' },
         { kind: "gap" },
 
         { kind: "cmd", text: "certifications" },

@@ -48,7 +48,6 @@
     '  <span class="tok-key">contact</span>     how to reach me',
     '  <span class="tok-key">cv</span>          download CV (PDF)',
     '  <span class="tok-key">ls</span>          list sections',
-    '  <span class="tok-key">theme</span>       light | dark | auto',
     '  <span class="tok-key">clear</span>       clear the screen',
     '  <span class="tok-key">help</span>        show this message',
     '<span class="tok-muted">Tip: <span class="tok-accent">cd projects</span> works too. Use ↑/↓ for history.</span>',
@@ -267,30 +266,6 @@
       printOut(screen, HELP_HTML);
       return;
     }
-    if (cmd === "theme") {
-      const value = (arg || "").trim().toLowerCase();
-      if (value === "light" || value === "dark" || value === "auto") {
-        setTheme(value);
-        printOut(
-          screen,
-          '<span class="tok-muted">theme → </span><span class="tok-key">' +
-            value +
-            "</span>"
-        );
-      } else {
-        printOut(
-          screen,
-          '<span class="tok-muted">pref: </span><span class="tok-key">' +
-            getThemePref() +
-            '</span> <span class="tok-muted">(effective: ' +
-            getTheme() +
-            ")</span>\n" +
-            '<span class="tok-muted">usage: </span>' +
-            '<span class="tok-key">theme light|dark|auto</span>'
-        );
-      }
-      return;
-    }
     if (cmd === "ls") {
       printOut(
         screen,
@@ -365,81 +340,8 @@
       .replace(/'/g, "&#39;");
   }
 
-  /* ---- Theme switching -------------------------------------------------
-     The initial palette is applied by assets/theme-boot.js before first
-     paint. Here we only handle user-initiated changes: the topbar button,
-     the `theme` command, OS preference changes while on "auto", and other
-     tabs of the same origin. */
-
-  const THEME_COLORS = { dark: "#0d1117", light: "#ffffff" };
-
-  function prefersLight() {
-    return !!(
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: light)").matches
-    );
-  }
-
-  function getThemePref() {
-    return document.documentElement.dataset.themePref || "auto";
-  }
-
-  function getTheme() {
-    return document.documentElement.dataset.theme || "dark";
-  }
-
-  function setTheme(pref, persist) {
-    // Coerce unknown values to "auto" — the same contract as theme-boot.js.
-    if (pref !== "light" && pref !== "dark") pref = "auto";
-    const theme = pref === "auto" ? (prefersLight() ? "light" : "dark") : pref;
-    const root = document.documentElement;
-    root.dataset.theme = theme;
-    root.dataset.themePref = pref;
-
-    if (persist !== false) {
-      try {
-        localStorage.setItem("theme", pref);
-      } catch (e) {
-        /* storage unavailable: the choice just won't survive a reload */
-      }
-    }
-
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", THEME_COLORS[theme] || THEME_COLORS.dark);
-    }
-
-    const toggle = document.getElementById("theme-toggle");
-    if (toggle) {
-      toggle.textContent = pref;
-      toggle.setAttribute("aria-label", "Color theme: " + pref);
-    }
-  }
-
-  function initTheme() {
-    const toggle = document.getElementById("theme-toggle");
-    if (toggle) {
-      toggle.addEventListener("click", () => {
-        setTheme(getTheme() === "dark" ? "light" : "dark");
-      });
-    }
-
-    if (window.matchMedia) {
-      const mql = window.matchMedia("(prefers-color-scheme: light)");
-      const onChange = () => {
-        if (getThemePref() === "auto") setTheme("auto", false);
-      };
-      if (mql.addEventListener) mql.addEventListener("change", onChange);
-      else if (mql.addListener) mql.addListener(onChange);
-    }
-
-    window.addEventListener("storage", (e) => {
-      if (e.key === "theme") setTheme(e.newValue || "auto", false);
-    });
-
-    // Reflect the state applied by theme-boot.js in the button label.
-    setTheme(getThemePref(), false);
-  }
+  /* Theming lives entirely in assets/theme-boot.js: the palette follows the
+     visitor's local clock, so there is nothing to toggle or persist here. */
 
   /* ---- Window chrome (traffic lights) -----------------------------------
      close    -> ends the session, then shows a desktop with a reconnect icon
@@ -788,7 +690,6 @@
     announceReady();
   }
 
-  initTheme();
   initChrome();
 
   window.bootTerminal = bootTerminal;

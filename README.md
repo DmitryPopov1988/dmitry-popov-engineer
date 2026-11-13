@@ -16,7 +16,7 @@ session with an interactive prompt that doubles as the navigation.
 ├── 404.html            # terminal-style "command not found"
 ├── assets/
 │   ├── styles.css            # shared stylesheet (dark + light palettes)
-│   ├── theme-boot.js         # applies the saved theme before first paint
+│   ├── theme-boot.js         # picks light/dark from the visitor's clock
 │   ├── terminal.js           # typing engine + interactive prompt
 │   ├── favicon.svg           # `>` glyph favicon
 │   ├── fonts/                # self-hosted JetBrains Mono (woff2)
@@ -46,7 +46,6 @@ Once a page finishes typing, an interactive prompt appears. Supported commands:
 - `contact` / `contacts` — get in touch
 - `cv` / `resume` — download CV
 - `ls` — list sections
-- `theme light|dark|auto` — switch color theme (same as the button in the title bar)
 - `help`, `?` — show help
 - `clear`, `Ctrl/Cmd+L` — clear the screen
 - `cd <section>` — same as the section name
@@ -61,6 +60,13 @@ fallback: a static, semantic version of the same content (`article`, `section`,
 `<html class="no-js">` is in the markup; an inline script removes the class
 before first paint, and with scripting disabled the `.no-js` rules hide the
 terminal and show the document instead.
+
+## Colour theme
+
+The palette follows the visitor's local clock: **10:00–22:00 light, 22:00–10:00
+dark**. `assets/theme-boot.js` resolves it before the first paint and re-checks
+once a minute, so a tab left open across the boundary switches by itself.
+There is no manual switch.
 
 ## Window controls
 
