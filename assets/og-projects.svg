@@ -18,18 +18,18 @@
 
   <!-- content -->
   <g font-family="Menlo, 'JetBrains Mono', monospace" font-size="22">
-    <text x="160" y="180" fill="#7ee787">&gt; ls work/</text>
-    <text x="160" y="212" fill="#79c0ff">alfa-bank-by/   uk-fintech-insurance/   uk-energy-platform/</text>
+    <text x="160" y="180" fill="#7ee787">&gt; ls projects/</text>
+    <text x="160" y="212" fill="#79c0ff">customer-web-apps/ energy-microservices/ banking-core/ this-site/</text>
 
-    <text x="160" y="272" fill="#7ee787">&gt; cat work/uk-energy-platform/README.md</text>
-    <text x="160" y="304" fill="#d2a8ff">uk-energy-platform<tspan fill="#8b949e">  &#8212; Senior Backend Engineer, 01/2019 &#8212; 04/2024</tspan></text>
-    <text x="180" y="336" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  distributed microservices, customer base of 2M+</text>
-    <text x="180" y="364" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra, K8s</text>
+    <text x="160" y="272" fill="#7ee787">&gt; cat projects/customer-web-apps/README.md</text>
+    <text x="160" y="304" fill="#d2a8ff">customer-web-apps<tspan fill="#8b949e">  &#8212; four customer-facing web apps</tspan></text>
+    <text x="180" y="336" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  ~10M monthly online users</text>
+    <text x="180" y="364" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  TypeScript, Node.js, Jest, Playwright</text>
 
-    <text x="160" y="424" fill="#7ee787">&gt; cat work/uk-fintech-insurance/README.md</text>
-    <text x="160" y="456" fill="#d2a8ff">uk-fintech-insurance<tspan fill="#8b949e">  &#8212; Senior Full-Stack Engineer, 04/2024 &#8212; 04/2026</tspan></text>
-    <text x="180" y="488" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  ~10M monthly online users</text>
-    <text x="180" y="516" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  TypeScript, Node.js, Jest, Playwright</text>
+    <text x="160" y="424" fill="#7ee787">&gt; cat projects/energy-microservices/README.md</text>
+    <text x="160" y="456" fill="#d2a8ff">energy-microservices<tspan fill="#8b949e">  &#8212; the platform behind customer journeys</tspan></text>
+    <text x="180" y="488" fill="#c9d1d9"><tspan fill="#79c0ff">scale</tspan>:  customer base of 2M+</text>
+    <text x="180" y="516" fill="#c9d1d9"><tspan fill="#79c0ff">stack</tspan>:  Java, Spring Boot, PostgreSQL, Cassandra, K8s</text>
   </g>
 
   <text x="600" y="605" text-anchor="middle" font-family="Menlo, monospace" font-size="20" fill="#8b949e">dmitry.popov.engineer/projects</text>

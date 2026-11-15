@@ -70,13 +70,14 @@ There is no manual switch.
 
 ## Window controls
 
-The traffic lights in the title bar behave like the real ones:
+Each traffic light does what its colour suggests:
 
-- **red** — ends the session (`logout`), then shows a desktop with a `terminal`
-  icon; click anywhere or press any key to reconnect
-- **yellow** — collapses the window down to its title bar; click again to restore
-- **green** — expands the window to fill the viewport, keeping its margins,
-  rounded corners and shadow; `Esc` also exits
+- **red** — ends the session: prints `logout`, then leaves a blinking cursor and
+  `press any key to reconnect`; any key or a click restarts the session
+- **yellow** — pauses the terminal and shows the same content as the static page
+  (the `<noscript>` document); click again to go back
+- **green** — full screen, edge to edge, with the section tabs kept as a dock at
+  the bottom; `Esc` or a second click exits
 
 ## Local development
 

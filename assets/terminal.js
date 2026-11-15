@@ -344,15 +344,16 @@
      visitor's local clock, so there is nothing to toggle or persist here. */
 
   /* ---- Window chrome (traffic lights) -----------------------------------
-     close    -> ends the session, then shows a desktop with a reconnect icon
-     minimize -> collapses the window down to its title bar
-     zoom     -> expands the window to fill the viewport (Esc also exits) */
+     red    -> ends the session: logout, then a blinking cursor and a hint;
+               any key or click restarts the session
+     yellow -> pauses the terminal and shows the static page instead
+     green  -> full screen, with the section tabs kept at the bottom */
 
   let activeSession = null;
   let lastBootOpts = null;
   let bootGen = 0;
   let screenWired = false;
-  let desktopEl = null;
+  let readingEl = null;
 
   function announce(message) {
     const status = document.getElementById("terminal-status");
@@ -372,6 +373,10 @@
       "click",
       (ev) => {
         if (ev.target.closest("a")) return;
+        if (document.body.classList.contains("is-closed")) {
+          openSession();
+          return;
+        }
         const input = activeSession && activeSession.activeInput;
         if (!input) return;
         input.focus();
@@ -381,50 +386,46 @@
     );
   }
 
-  function buildDesktop() {
-    const wrap = el("div", "desktop");
-    wrap.id = "desktop";
-    wrap.hidden = true;
+  // The static page shown in pause mode is the same markup as the <noscript>
+  // fallback, moved into a hidden container on first use (one source of truth).
+  function ensureReading() {
+    if (readingEl) return readingEl;
+    const win = terminalWindow();
+    const fallback = document.querySelector("noscript");
+    if (!win || !fallback) return null;
 
-    const button = el("button", "desktop-icon");
-    button.type = "button";
-    button.id = "reconnect";
-    button.innerHTML =
-      '<svg class="desktop-icon-glyph" viewBox="0 0 24 24" aria-hidden="true">' +
-      '<rect x="2.75" y="3.75" width="18.5" height="14.5" rx="2.5"/>' +
-      '<path d="M6.6 8.9 9.3 11l-2.7 2.1M11.5 13.1h5.5"/></svg>' +
-      '<span class="desktop-label">terminal</span>';
-
-    const hint = el(
-      "p",
-      "desktop-hint",
-      "Click anywhere or press any key to reconnect"
-    );
-
-    wrap.appendChild(button);
-    wrap.appendChild(hint);
-    wrap.addEventListener("click", openSession);
-    document.body.appendChild(wrap);
-    return wrap;
+    readingEl = el("div", "reading");
+    readingEl.id = "reading";
+    readingEl.tabIndex = -1;
+    readingEl.innerHTML = fallback.textContent;
+    win.appendChild(readingEl);
+    return readingEl;
   }
 
-  function resetWindowState() {
-    const win = terminalWindow();
-    if (win) {
-      win.classList.remove("is-minimized");
-      win.style.height = "";
-    }
-    document.body.classList.remove("is-zoomed");
-    const min = document.querySelector(".dot.min");
-    const zoom = document.querySelector(".dot.zoom");
-    if (min) min.setAttribute("aria-pressed", "false");
-    if (zoom) zoom.setAttribute("aria-pressed", "false");
+  function showClosedScreen(screen) {
+    screen.innerHTML = "";
+    screen.setAttribute("aria-busy", "false");
+    const line = el("div", "line");
+    line.innerHTML =
+      '<span class="cursor"></span>' +
+      '<span class="tok-muted"> press any key to reconnect</span>';
+    screen.appendChild(line);
   }
 
   function closeSession() {
+    if (document.body.classList.contains("is-closed")) return;
+
     const screen = document.getElementById("screen");
+    const win = terminalWindow();
     bootGen++; // stops any typing still in flight
     if (activeSession) activeSession.activeInput = null;
+    togglePause(false, true); // exit and pause are mutually exclusive
+    if (document.body.classList.contains("is-zoomed")) toggleZoom(false, true);
+
+    // Keep the window size so the session looks switched off, not shrunk.
+    if (win) {
+      win.style.height = win.offsetHeight + "px";
+    }
 
     if (screen) {
       printCmdEcho(screen, "logout");
@@ -435,89 +436,55 @@
     }
 
     const finish = () => {
-      resetWindowState();
+      if (screen) showClosedScreen(screen);
       document.body.classList.add("is-closed");
-
-      if (!desktopEl) desktopEl = buildDesktop();
-      desktopEl.hidden = false;
-
-      const button = document.getElementById("reconnect");
-      if (button) button.focus({ preventScroll: true });
-      announce("Session closed. Click anywhere or press any key to reconnect.");
+      announce("Session closed. Press any key or click to reconnect.");
     };
 
     if (prefersReducedMotion()) finish();
-    else setTimeout(finish, 600);
+    else setTimeout(finish, 700);
   }
 
   function openSession() {
     if (!document.body.classList.contains("is-closed")) return;
-    if (desktopEl) desktopEl.hidden = true;
     document.body.classList.remove("is-closed");
 
     const screen = document.getElementById("screen");
+    const win = terminalWindow();
+    if (win) win.style.height = "";
     if (screen) {
       screen.innerHTML = "";
       screen.inert = false;
       screen.removeAttribute("aria-hidden");
     }
 
-    resetWindowState();
     announce("Session restored.");
     bootTerminal(lastBootOpts || {});
   }
 
-  function setCollapsed(collapsed) {
-    const win = terminalWindow();
-    if (!win) return;
+  function togglePause(force, silent) {
+    const paused =
+      force === undefined
+        ? !document.body.classList.contains("is-paused")
+        : !!force;
+    if (paused) ensureReading();
+    document.body.classList.toggle("is-paused", paused);
 
-    const bar = win.querySelector(".topbar");
-    const barHeight = bar ? Math.ceil(bar.getBoundingClientRect().height) : 34;
-    const screen = document.getElementById("screen");
+    const button = document.querySelector(".dot.min");
+    if (button) button.setAttribute("aria-pressed", String(paused));
+    if (silent) return;
 
-    if (collapsed) {
-      if (document.body.classList.contains("is-zoomed")) toggleZoom(false);
-      win.style.height = win.offsetHeight + "px";
-      win.classList.add("is-minimized");
-      win.style.height = barHeight + "px";
-      if (screen) {
-        screen.inert = true;
-        screen.setAttribute("aria-hidden", "true");
-      }
-      if (activeSession && activeSession.activeInput) {
-        activeSession.activeInput.blur();
-      }
-      announce("Window minimized.");
+    if (paused) {
+      announce("Paused. Showing the static page.");
+      if (readingEl) readingEl.focus({ preventScroll: true });
     } else {
-      win.classList.remove("is-minimized");
-      if (screen) {
-        screen.inert = false;
-        screen.removeAttribute("aria-hidden");
-      }
-      win.style.height = "";
-      const natural = win.offsetHeight;
-      win.style.height = barHeight + "px";
-      win.style.height = natural + "px";
-      setTimeout(
-        () => {
-          if (!win.classList.contains("is-minimized")) win.style.height = "";
-        },
-        prefersReducedMotion() ? 0 : 260
-      );
-      announce("Window restored.");
+      announce("Terminal resumed.");
+      const input = activeSession && activeSession.activeInput;
+      if (input) input.focus({ preventScroll: true });
     }
   }
 
-  function toggleMinimize() {
-    const win = terminalWindow();
-    if (!win) return;
-    const minimize = !win.classList.contains("is-minimized");
-    setCollapsed(minimize);
-    const button = document.querySelector(".dot.min");
-    if (button) button.setAttribute("aria-pressed", String(minimize));
-  }
-
-  function toggleZoom(force) {
+  function toggleZoom(force, silent) {
     const zoomed =
       force === undefined
         ? !document.body.classList.contains("is-zoomed")
@@ -525,7 +492,9 @@
     document.body.classList.toggle("is-zoomed", zoomed);
     const button = document.querySelector(".dot.zoom");
     if (button) button.setAttribute("aria-pressed", String(zoomed));
-    announce(zoomed ? "Window expanded to full screen." : "Window restored.");
+    if (!silent) {
+      announce(zoomed ? "Window expanded." : "Window restored.");
+    }
   }
 
   function initChrome() {
@@ -534,7 +503,7 @@
     const zoom = document.querySelector(".dot.zoom");
 
     if (close) close.addEventListener("click", closeSession);
-    if (min) min.addEventListener("click", toggleMinimize);
+    if (min) min.addEventListener("click", () => togglePause());
     if (zoom) zoom.addEventListener("click", () => toggleZoom());
 
     document.addEventListener("keydown", (ev) => {

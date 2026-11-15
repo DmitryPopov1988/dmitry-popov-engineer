@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark" />
 
   <title>Projects — Dmitry Popov</title>
-  <meta name="description" content="Selected engagements by Dmitry Popov — Senior Software Engineer (anonymised, by domain)." />
+  <meta name="description" content="Selected projects by Dmitry Popov — customer web apps, energy microservices, banking core and this site." />
   <link rel="canonical" href="https://dmitry.popov.engineer/projects.html" />
 
   <meta property="og:type" content="website" />
@@ -19,13 +19,13 @@
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Terminal window: ls work/ — Dmitry Popov selected projects." />
+  <meta property="og:image:alt" content="Terminal window: ls projects/ — Dmitry Popov selected projects." />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Projects — Dmitry Popov" />
   <meta name="twitter:description" content="Selected projects by Dmitry Popov." />
   <meta name="twitter:image" content="https://dmitry.popov.engineer/assets/og-projects.png" />
-  <meta name="twitter:image:alt" content="Terminal window: ls work/ — Dmitry Popov selected projects." />
+  <meta name="twitter:image:alt" content="Terminal window: ls projects/ — Dmitry Popov selected projects." />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
@@ -45,13 +45,13 @@
     <h1 class="visually-hidden">Projects — Dmitry Popov</h1>
     <div class="topbar">
       <div class="dots">
-        <button class="dot close" type="button" aria-label="Close session">
+        <button class="dot close" type="button" aria-label="End session">
           <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.7 3.7 8.3 8.3M8.3 3.7 3.7 8.3"/></svg>
         </button>
-        <button class="dot min" type="button" aria-label="Minimize window" aria-pressed="false">
+        <button class="dot min" type="button" aria-label="Pause session" aria-pressed="false">
           <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.4 6h5.2"/></svg>
         </button>
-        <button class="dot zoom" type="button" aria-label="Maximize window" aria-pressed="false">
+        <button class="dot zoom" type="button" aria-label="Full screen" aria-pressed="false">
           <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.8 3.6h3.6v3.6z"/><path d="M7.2 8.4H3.6V4.8z"/></svg>
         </button>
       </div>
@@ -63,46 +63,45 @@
   <noscript>
     <article class="fallback">
       <h1>Projects — Dmitry Popov</h1>
-      <p class="fallback-note">This page normally runs as an interactive terminal. With JavaScript disabled, here is the same content as a plain document.</p>
-      <p class="fallback-note">UK outsourcing client names omitted under NDA.</p>
+      <p class="fallback-note">This page normally runs as an interactive terminal — here is the same content as a plain document.</p>
+      <p class="fallback-note">Client names omitted under NDA; employers and dates live on the <a href="experience.html">experience</a> page.</p>
 
       <section>
-        <h2>alfa-bank-by</h2>
-        <p>Senior Java Software Engineer · <time datetime="2026-04">April 2026</time> — present</p>
+        <h2>customer-web-apps</h2>
+        <p>Four customer-facing web applications on a high-traffic platform.</p>
+        <dl>
+          <dt>Scale</dt><dd>~10M monthly online users</dd>
+          <dt>Stack</dt><dd>TypeScript, Node.js, Jest, Playwright</dd>
+          <dt>Built</dt><dd>client-side validation and interaction, plus security and accessibility fixes</dd>
+          <dt>Shipped</dt><dd>behind feature flags, covered by contract and end-to-end tests</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>energy-microservices</h2>
+        <p>The platform behind customer journeys.</p>
+        <dl>
+          <dt>Scale</dt><dd>customer base of 2M+</dd>
+          <dt>Stack</dt><dd>Java, Spring Boot, PostgreSQL, Cassandra, ActiveMQ, Kubernetes</dd>
+          <dt>Built</dt><dd>several core domains end-to-end, kept available through containerised CI/CD</dd>
+          <dt>Ops</dt><dd>monitoring dashboards, notification workflows, customer-facing email</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>banking-core</h2>
+        <p>Distributed services in a regulated banking environment.</p>
         <dl>
           <dt>Stack</dt><dd>Java 25, Spring, MongoDB</dd>
-          <dt>Focus</dt><dd>distributed systems in a regulated banking environment</dd>
         </dl>
       </section>
 
       <section>
-        <h2>uk-fintech-insurance</h2>
-        <p>Senior Full-Stack Engineer · <time datetime="2024-04">April 2024</time> — <time datetime="2026-04">April 2026</time></p>
+        <h2>this-site</h2>
+        <p>The page you are reading.</p>
         <dl>
-          <dt>Scale</dt><dd>~10M monthly online users on the platform</dd>
-          <dt>Role</dt><dd>full-stack delivery on four of the platform’s customer-facing web applications</dd>
-          <dt>Stack</dt><dd>TypeScript, Node.js, Jest, Playwright</dd>
-          <dt>Focus</dt><dd>frontend validation and client-side scripting; web application security and accessibility standards</dd>
-          <dt>Shipped</dt><dd>contract- and end-to-end-tested changes behind feature flags</dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2>uk-energy-platform</h2>
-        <p>Senior Backend Engineer · <time datetime="2019-01">January 2019</time> — <time datetime="2024-04">April 2024</time></p>
-        <dl>
-          <dt>Scale</dt><dd>distributed microservices platform, customer base of 2M+</dd>
-          <dt>Scope</dt><dd>multiple core business domains, owned end-to-end</dd>
-          <dt>Stack</dt><dd>Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra, Kubernetes, Jenkins, Liquibase, Kibana, Grafana, New Relic</dd>
-          <dt>Focus</dt><dd>high-availability backend services; third-party integrations; monitoring dashboards, notification workflows and customer-facing email templates</dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2>dmitry-popov-engineer</h2>
-        <p>This site.</p>
-        <dl>
-          <dt>Stack</dt><dd>plain HTML, CSS and JavaScript</dd>
+          <dt>Stack</dt><dd>plain HTML, CSS and JavaScript — no build step</dd>
+          <dt>Built</dt><dd>clock-based light/dark theme, static no-JS fallback, keyboard-accessible window controls</dd>
         </dl>
       </section>
     </article>
@@ -121,39 +120,38 @@
     bootTerminal({
       page: "projects",
       lines: [
-        { kind: "cmd", text: "ls work/" },
-        { kind: "out", html: '<span class="tok-key">alfa-bank-by/</span>   <span class="tok-key">uk-fintech-insurance/</span>   <span class="tok-key">uk-energy-platform/</span>   <span class="tok-key">dmitry-popov-engineer/</span>' },
+        { kind: "cmd", text: "ls projects/" },
+        { kind: "out", html: '<span class="tok-key">customer-web-apps/</span>   <span class="tok-key">energy-microservices/</span>   <span class="tok-key">banking-core/</span>   <span class="tok-key">this-site/</span>' },
         { kind: "gap" },
 
-        { kind: "out", html: '<span class="tok-muted"># UK outsourcing client names omitted under NDA.</span>' },
+        { kind: "out", html: '<span class="tok-muted"># Client names under NDA; employers and dates: experience.</span>' },
         { kind: "gap" },
 
-        { kind: "cmd", text: "cat work/alfa-bank-by/README.md" },
-        { kind: "out", html: '<span class="tok-accent">alfa-bank-by</span> <span class="tok-muted">— Senior Java Software Engineer, 04/2026 — present</span>' },
-        { kind: "out", html: '  <span class="tok-key">stack</span>:  Java 25, Spring, MongoDB' },
-        { kind: "out", html: '  <span class="tok-key">focus</span>: distributed systems in a regulated banking environment' },
-        { kind: "gap" },
-
-        { kind: "cmd", text: "cat work/uk-fintech-insurance/README.md" },
-        { kind: "out", html: '<span class="tok-accent">uk-fintech-insurance</span> <span class="tok-muted">— Senior Full-Stack Engineer, 04/2024 — 04/2026</span>' },
-        { kind: "out", html: '  <span class="tok-key">scale</span>:   ~10M monthly online users on the platform' },
-        { kind: "out", html: '  <span class="tok-key">role</span>:    full-stack delivery on four of the platform\u2019s customer-facing web applications' },
+        { kind: "cmd", text: "cat projects/customer-web-apps/README.md" },
+        { kind: "out", html: '<span class="tok-accent">customer-web-apps</span> <span class="tok-muted">— four customer-facing web apps</span>' },
+        { kind: "out", html: '  <span class="tok-key">scale</span>:   ~10M monthly online users' },
         { kind: "out", html: '  <span class="tok-key">stack</span>:   TypeScript, Node.js, Jest, Playwright' },
-        { kind: "out", html: '  <span class="tok-key">focus</span>:   frontend validation and client-side scripting; web application security and accessibility standards' },
-        { kind: "out", html: '  <span class="tok-key">shipped</span>: contract- and end-to-end-tested changes behind feature flags' },
+        { kind: "out", html: '  <span class="tok-key">built</span>:   client-side validation and interaction, security and accessibility fixes' },
+        { kind: "out", html: '  <span class="tok-key">shipped</span>: behind feature flags, with contract and end-to-end tests' },
         { kind: "gap" },
 
-        { kind: "cmd", text: "cat work/uk-energy-platform/README.md" },
-        { kind: "out", html: '<span class="tok-accent">uk-energy-platform</span> <span class="tok-muted">— Senior Backend Engineer, 01/2019 — 04/2024</span>' },
-        { kind: "out", html: '  <span class="tok-key">scale</span>:   distributed microservices platform, customer base of 2M+' },
-        { kind: "out", html: '  <span class="tok-key">scope</span>:   multiple core business domains, owned end-to-end' },
-        { kind: "out", html: '  <span class="tok-key">stack</span>:   Java, Spring Boot, PostgreSQL, ActiveMQ, Cassandra, Kubernetes, Jenkins, Liquibase, Kibana, Grafana, New Relic' },
-        { kind: "out", html: '  <span class="tok-key">focus</span>:   high-availability backend services; third-party integrations; monitoring dashboards, notification workflows and customer-facing email templates' },
+        { kind: "cmd", text: "cat projects/energy-microservices/README.md" },
+        { kind: "out", html: '<span class="tok-accent">energy-microservices</span> <span class="tok-muted">— the platform behind customer journeys</span>' },
+        { kind: "out", html: '  <span class="tok-key">scale</span>:   customer base of 2M+' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>:   Java, Spring Boot, PostgreSQL, Cassandra, ActiveMQ, Kubernetes' },
+        { kind: "out", html: '  <span class="tok-key">built</span>:   several core domains end-to-end, kept available through containerised CI/CD' },
+        { kind: "out", html: '  <span class="tok-key">ops</span>:     monitoring dashboards, notification workflows, customer-facing email' },
         { kind: "gap" },
 
-        { kind: "cmd", text: "cat work/dmitry-popov-engineer/README.md" },
-        { kind: "out", html: '<span class="tok-accent">dmitry-popov-engineer</span> <span class="tok-muted">— this site</span>' },
-        { kind: "out", html: '  <span class="tok-key">stack</span>: plain HTML/CSS/JS' },
+        { kind: "cmd", text: "cat projects/banking-core/README.md" },
+        { kind: "out", html: '<span class="tok-accent">banking-core</span> <span class="tok-muted">— distributed services in a regulated bank</span>' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>:   Java 25, Spring, MongoDB' },
+        { kind: "gap" },
+
+        { kind: "cmd", text: "cat projects/this-site/README.md" },
+        { kind: "out", html: '<span class="tok-accent">this-site</span> <span class="tok-muted">— the page you are reading</span>' },
+        { kind: "out", html: '  <span class="tok-key">stack</span>:   plain HTML, CSS and JavaScript — no build step' },
+        { kind: "out", html: '  <span class="tok-key">built</span>:   clock-based theme, no-JS fallback, keyboard-accessible window controls' },
         { kind: "gap" },
 
         { kind: "cmd", text: "help" },
