@@ -7,6 +7,9 @@
 # lines of the staged diff are scanned, so previously committed content never
 # re-triggers the check.
 #
+# It also refreshes sitemap.xml <lastmod> for any staged page that appears in
+# the sitemap, and stages the result, so the date is never forgotten.
+#
 # Install once per clone:
 #   git config core.hooksPath githooks
 #
@@ -49,6 +52,47 @@ if [ -n "$hits" ]; then
   printf '\n  Fix or unstage the lines above. If the match is harmless:\n'
   printf '    git commit --no-verify\n\n'
   exit 1
+fi
+
+# --- keep sitemap.xml <lastmod> in sync with the staged pages --------------
+# Only pages listed in the sitemap count; 404.html and assets are not in it.
+if [ -f sitemap.xml ]; then
+  staged=$(git diff --cached --name-only --diff-filter=ACMR)
+  urls=""
+  for page in index.html experience.html projects.html contact.html; do
+    if printf '%s\n' "$staged" | grep -Fqx "$page"; then
+      case "$page" in
+        index.html) urls="$urls https://dmitry.popov.engineer/" ;;
+        *) urls="$urls https://dmitry.popov.engineer/$page" ;;
+      esac
+    fi
+  done
+
+  if [ -n "$urls" ]; then
+    today=$(date +%Y-%m-%d)
+    tmp=$(mktemp)
+    if awk -v today="$today" -v urls="$urls" '
+      BEGIN { n = split(urls, a, " "); for (i = 1; i <= n; i++) want[a[i]] = 1 }
+      /<loc>/ {
+        if (match($0, /<loc>[^<]*<\/loc>/)) {
+          loc = substr($0, RSTART + 5, RLENGTH - 11)
+        }
+      }
+      /<lastmod>/ && (loc in want) {
+        sub(/<lastmod>[^<]*<\/lastmod>/, "<lastmod>" today "</lastmod>")
+      }
+      { print }
+    ' sitemap.xml > "$tmp"; then
+      mv "$tmp" sitemap.xml
+    else
+      rm -f "$tmp"
+    fi
+
+    if ! git diff --quiet -- sitemap.xml; then
+      git add sitemap.xml
+      printf '  pre-commit: sitemap.xml lastmod -> %s for%s\n' "$today" "$urls"
+    fi
+  fi
 fi
 
 exit 0
