@@ -337,27 +337,37 @@ body.is-paused .terminal .visually-hidden {
   stroke: none;
 }
 
-/* Hovering anywhere in the group reveals every glyph dimmed; the button under
-   the pointer darkens a little and its own glyph goes fully opaque. */
-.dots:hover .dot > svg,
-.dots:focus-within .dot > svg {
+/* Hover only where the pointer can really hover, so :hover does not stick to
+   a tapped control on touch screens. Hovering anywhere in the group reveals
+   every glyph dimmed; the button under the pointer darkens a little and its
+   own glyph goes fully opaque. */
+@media (hover: hover) {
+  .dots:hover .dot > svg {
+    opacity: 0.55;
+  }
+
+  .dots:hover .dot:hover > svg {
+    opacity: 1;
+  }
+
+  .dot:hover {
+    filter: brightness(0.92);
+  }
+}
+
+/* Keyboard focus behaves like hovering the group. */
+.dots:has(.dot:focus-visible) .dot > svg {
   opacity: 0.55;
 }
 
-/* The rule needs the group prefix to outrank the group rule above. */
-.dots:hover .dot:hover > svg {
+.dots:has(.dot:focus-visible) .dot:focus-visible > svg {
   opacity: 1;
 }
 
-.dot:hover {
-  filter: brightness(0.92);
-}
-
-/* Touch screens have no hover state — keep the glyphs visible there. */
-@media (hover: none) {
-  .dot > svg {
-    opacity: 1;
-  }
+/* Touch screens have no hover: reveal a glyph only while its button is
+   pressed, so the controls never look permanently active. */
+.dot:active > svg {
+  opacity: 1;
 }
 
 /* Centred across the whole bar, independent of the traffic lights. */
