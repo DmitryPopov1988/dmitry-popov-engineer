@@ -81,12 +81,24 @@ Each traffic light does what its colour suggests:
 
 ## Local development
 
-There is no build step. Open the file directly or serve the folder:
+There is no build step and no dependencies: plain HTML, CSS and JavaScript.
+Any static file server is enough, and Python's standard-library one is the
+simplest (nothing to install):
 
 ```bash
-python3 -m http.server 5173
-# then open http://localhost:5173
+python3 -m http.server 5173 --bind 127.0.0.1
+# → http://127.0.0.1:5173
 ```
+
+A server is required for a faithful preview: routes in `assets/terminal.js`, the
+home nav and the 404 `<base>` are root-absolute, so opening `index.html` from
+disk (`file://`) breaks navigation.
+
+Other static servers work too: `npx serve -l 5173`, `php -S 127.0.0.1:5173`,
+`ruby -run -e httpd . -p 5173`, or Live Server in VS Code.
+
+Stop it with `Ctrl+C`, or from another shell:
+`lsof -ti tcp:5173 | xargs kill`.
 
 ## Pre-commit hook
 
